@@ -1,5 +1,7 @@
 package com.tqb.newsreader;
 
+import static com.tqb.newsreader.backend.AsyncParam.controller;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -20,12 +22,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Sử dụng database bằng cách truy vấn trực tiếp*/
         DatabaseHandler db = new DatabaseHandler(this);
         db.clearNews();
 
-        AsyncController asyncController = new AsyncController();
-        AsyncParam asyncParam = new AsyncParam(new Controller(this), "baseOnFavorite");
-        asyncController.execute(asyncParam);
+        //Override lại hàm onPostExecute
+        AsyncController asyncController = new AsyncController() {
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                //Thay đổi giao diện ở đây
+                controller.logToConsole();
+            }
+        };
+        asyncController.execute(new AsyncParam(new Controller(this), "latest"));
+
     }
 }

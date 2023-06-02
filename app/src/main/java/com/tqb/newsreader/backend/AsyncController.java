@@ -34,7 +34,6 @@ public class AsyncController extends AsyncTask<AsyncParam, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        controller.logToConsole();
     }
 
     @Override
