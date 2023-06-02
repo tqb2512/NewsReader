@@ -16,6 +16,8 @@ public class VnExpress implements Callback<RSSFeed> {
     private static final String BASE_URL = "https://vnexpress.net";
     private static Context context;
 
+    public static boolean isReady = false;
+
     public void latest(Context context)
     {
         this.context = context;
@@ -59,6 +61,7 @@ public class VnExpress implements Callback<RSSFeed> {
             RSSFeed rss = response.body();
             DatabaseHandler db = new DatabaseHandler(context);
             db.importNews(rss);
+            isReady = true;
         } else {
             System.out.println(response.errorBody());
         }

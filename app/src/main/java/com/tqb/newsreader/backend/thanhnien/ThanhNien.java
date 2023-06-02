@@ -15,6 +15,9 @@ public class ThanhNien implements Callback<RSSFeed> {
 
     private static final String BASE_URL = "https://thanhnien.vn";
     private static Context context;
+    public static boolean isReady = false;
+
+    public static RSSFeed rssFeed = new RSSFeed();
 
     public void latest(Context context)
     {
@@ -60,6 +63,8 @@ public class ThanhNien implements Callback<RSSFeed> {
             RSSFeed rss = response.body();
             DatabaseHandler db = new DatabaseHandler(context);
             db.importNews(rss);
+            RSSFeed rssFeed = response.body();
+            isReady = true;
         } else {
             System.out.println(response.errorBody());
         }
