@@ -38,6 +38,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void importFavoriteCategory(String category)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM categories";
+        android.database.Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(1).equals(category)) {
+                    return;
+                }
+            } while (cursor.moveToNext());
+        }
+        db.close();
+
+        Log.d("DatabaseHandler", "Importing favorite category...");
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", category);
+        db.insert("categories", null, values);
+        db.close();
+    }
+
     public void importFavoriteCategories(List<String> categories)
     {
         Log.d("DatabaseHandler", "Importing favorite categories...");

@@ -52,6 +52,18 @@ public class VnExpress implements Callback<RSSFeed> {
                 call = api.health();
                 call.enqueue(this);
                 break;
+            case "entertainment":
+                call = api.entertainment();
+                call.enqueue(this);
+                break;
+            case "life":
+                call = api.life();
+                call.enqueue(this);
+                break;
+            case "sport":
+                call = api.sport();
+                call.enqueue(this);
+                break;
         }
     }
 

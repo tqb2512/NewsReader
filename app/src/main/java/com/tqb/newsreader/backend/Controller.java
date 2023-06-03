@@ -22,7 +22,6 @@ public class Controller {
         db = new DatabaseHandler(context);
     }
 
-    //Lấy tin mới nhất
     public void latest() {
         db.clearNews();
         thanhnien.latest(context);
@@ -31,7 +30,6 @@ public class Controller {
         }
     }
 
-    //Lấy tin mới dựa vào các thể loại yêu thích
     public void baseOnFavorite() {
         db.clearNews();
         List<String> favoriteCategories = db.getFavoriteCategories();
@@ -45,8 +43,29 @@ public class Controller {
                     vnexpress.byCategory(context, category);
                     thanhnien.byCategory(context, category);
                     break;
+                case "entertainment":
+                    vnexpress.byCategory(context, category);
+                    thanhnien.byCategory(context, category);
+                    break;
+                case "life":
+                    vnexpress.byCategory(context, category);
+                    thanhnien.byCategory(context, category);
+                    break;
+                case "sport":
+                    vnexpress.byCategory(context, category);
+                    thanhnien.byCategory(context, category);
+                    break;
             }
         }
+        while (thanhnien.isReady == false || vnexpress.isReady == false) {
+        }
+    }
+
+    public void byCategory(String category)
+    {
+        db.clearNews();
+        vnexpress.byCategory(context, category);
+        thanhnien.byCategory(context, category);
         while (thanhnien.isReady == false || vnexpress.isReady == false) {
         }
     }

@@ -4,6 +4,7 @@ import static com.tqb.newsreader.backend.AsyncParam.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         db.clearNews();
 
         //Override lại hàm onPostExecute
-        AsyncController asyncController = new AsyncController() {
+        @SuppressLint("StaticFieldLeak") AsyncController asyncController = new AsyncController() {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 controller.logToConsole();
             }
         };
-        asyncController.execute(new AsyncParam(new Controller(this), "latest"));
+        asyncController.execute(new AsyncParam(new Controller(this), "byCategory", "world"));
 
     }
 }

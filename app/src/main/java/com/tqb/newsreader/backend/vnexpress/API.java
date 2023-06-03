@@ -16,4 +16,13 @@ public interface API {
 
     @GET("/rss/suc-khoe.rss")
     Call<RSSFeed> health();
+
+    @GET("/rss/giai-tri.rss")
+    Call<RSSFeed> entertainment();
+
+    @GET("/rss/gia-dinh.rss")
+    Call<RSSFeed> life();
+
+    @GET("/rss/the-thao.rss")
+    Call<RSSFeed> sport();
 }

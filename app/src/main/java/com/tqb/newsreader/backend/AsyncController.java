@@ -16,6 +16,10 @@ public class AsyncController extends AsyncTask<AsyncParam, Void, Void> {
         controller.baseOnFavorite();
     }
 
+    public void byCategory(String category) {
+        controller.byCategory(category);
+    }
+
     @Override
     protected Void doInBackground(AsyncParam... asyncParams) {
         controller = asyncParams[0].getController();
@@ -26,6 +30,9 @@ public class AsyncController extends AsyncTask<AsyncParam, Void, Void> {
                 break;
             case "baseOnFavorite":
                 baseOnFavorite();
+                break;
+            case "byCategory":
+                byCategory(asyncParams[0].getCategory());
                 break;
         }
         return null;
