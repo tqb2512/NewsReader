@@ -28,15 +28,29 @@
             android:maxLines="4"/>
 
         <TextView
+            android:id="@+id/news_feed_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/news_feed_title"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/news_feed_img"
+            android:fontFamily="@font/noto_sans_med"
+            android:maxLines="4"
+            android:textSize="13sp"
+            android:text="Description"
+            android:textColor="@color/dark_grey" />
+
+        <TextView
             android:id="@+id/news_feed_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/news_feed_src"
             android:textColor="@color/dark_grey"
-            android:layout_below="@id/news_feed_title"
             android:fontFamily="@font/noto_sans_med"
-            android:layout_toEndOf="@id/news_feed_img"
-            android:layout_marginStart="30dp"/>
+            android:layout_toEndOf="@id/news_feed_topic"
+            android:layout_marginStart="15dp"
+            android:layout_alignBottom="@id/news_feed_img"/>
 
         <TextView
             android:id="@+id/news_feed_topic"
@@ -60,7 +74,8 @@
             android:layout_alignBottom="@id/news_feed_img"
             android:layout_marginStart="15dp"
             android:drawableStart="@drawable/dark_grey_circle"
-            android:drawablePadding="15dp"
+            android:drawablePadding="7dp"
+            android:maxLines="1"
             />
 
 
