@@ -51,6 +51,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- recycler view thứ nhất: RecyclerView của rv_item (là RadioButton)
+    Cái này là cho dãy nút "topic" (worlds, sports, ...)
+    nằm ngang cho UI, lưu ý phải code để chọn được duy nhất 1 RadioButton
+    đổi màu, mặc định là bấm chọn là nút đổi màu luôn (không đổi lại được)
+    nên phải code lại.
+    Tham khảo code: https://www.youtube.com/watch?v=1FtZsgQL03w
+    Ngoài đó còn phải code chọn 1 nút radio mặc định cho giống UI tham khảo
+    lúc mới khởi động app.
+    -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/horizontal_recycler1"
         android:layout_width="wrap_content"
@@ -61,6 +70,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_news" />
 
+    <!-- recycler view thứ 2: Fragment gồm RecyclerView của mấy cái news_feed_item
+    Cái này thì code như bth, nhưng lưu ý là cái này là Fragment nên phải code
+    trong NewsFeed trong phần backend-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="com.tqb.newsreader.NewsFeed"
@@ -71,6 +83,8 @@
         app:layout_constraintTop_toBottomOf="@+id/horizontal_recycler1"
         tools:layout="@layout/fragment_news_feed" />
 
+    <!-- NavigationBottom: Phần này để đổi Fragment cho từng UI, còn phải làm
+    Search, Bookmarks, Settings-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
