@@ -22,6 +22,10 @@ public class Controller {
         db = new DatabaseHandler(context);
     }
 
+    public static Context getContext() {
+        return context;
+    }
+
     public void latest() {
         db.clearNews();
         thanhnien.latest(context);

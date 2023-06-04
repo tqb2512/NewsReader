@@ -88,6 +88,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public RSSItem[] getNews()
+    {
+        Log.d("DatabaseHandler", "Getting news...");
+        List<RSSItem> items = new ArrayList<RSSItem>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME;
+        android.database.Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                RSSItem item = new RSSItem();
+                item.setTitle(cursor.getString(1));
+                item.setLink(cursor.getString(2));
+                item.setDescription(cursor.getString(3));
+                item.setPubDate(cursor.getString(4));
+                item.setGuid(cursor.getString(5));
+                item.setImage(cursor.getString(6));
+                items.add(item);
+            } while (cursor.moveToNext());
+        }
+        return items.toArray(new RSSItem[items.size()]);
+    }
+
     public List<String> getFavoriteCategories()
     {
         Log.d("DatabaseHandler", "Getting favorite categories...");
