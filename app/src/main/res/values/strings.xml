@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NewsReader</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news_24_app_title">News 24</string>
+    <string name="img_des_feed">ảnh cho newsfeed</string>
+    <string name="news_feed_title">news_feed_title</string>
+    <string name="news_feed_src">source</string>
+    <string name="news_feed_topic">topic</string>
+    <string name="news_feed_date">ngày đăng</string>
 </resources>

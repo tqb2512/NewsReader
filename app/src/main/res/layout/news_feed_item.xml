@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:id="@+id/news_feed_img"
+            android:padding="5dp"
+            android:contentDescription="@string/img_des_feed"/>
+
+        <TextView
+            android:id="@+id/news_feed_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/news_feed_title"
+            android:layout_toEndOf="@id/news_feed_img"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/noto_sans_bold"
+            android:textColor="@color/black"
+            android:ellipsize="end"
+            android:maxLines="4"/>
+
+        <TextView
+            android:id="@+id/news_feed_src"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/news_feed_src"
+            android:textColor="@color/dark_grey"
+            android:layout_below="@id/news_feed_title"
+            android:fontFamily="@font/noto_sans_med"
+            android:layout_toEndOf="@id/news_feed_img"
+            android:layout_marginStart="30dp"/>
+
+        <TextView
+            android:id="@+id/news_feed_topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/news_feed_topic"
+            android:textColor="@color/natural_blue"
+            android:fontFamily="@font/noto_sans_bold"
+            android:layout_toEndOf="@id/news_feed_img"
+            android:layout_alignBottom="@id/news_feed_img"
+            android:layout_marginStart="30dp"/>
+
+        <TextView
+            android:id="@+id/news_feed_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/news_feed_date"
+            android:textColor="@color/dark_grey"
+            android:fontFamily="@font/noto_sans_med"
+            android:layout_toEndOf="@id/news_feed_src"
+            android:layout_alignBottom="@id/news_feed_img"
+            android:layout_marginStart="15dp"
+            android:drawableStart="@drawable/dark_grey_circle"
+            android:drawablePadding="15dp"
+            />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
