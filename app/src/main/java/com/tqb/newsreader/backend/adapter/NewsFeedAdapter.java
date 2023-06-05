@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.tqb.newsreader.R;
 import com.tqb.newsreader.backend.RSSItem;
 
@@ -52,7 +53,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
         date.setText(item.getPubDate());
         description.setText(item.getDescription());
         //topic.setText(item.getCategory());
-        //image.setImageBitmap(item.getImage());
+        Picasso.get().load(item.getImage()).fit().centerCrop().into(image);
     }
 
     @Override
@@ -84,8 +85,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     RSSItem item = items[getAdapterPosition()];
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getLink()));
-                    context.startActivity(intent);
+                    Toast.makeText(context, item.getDescription(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

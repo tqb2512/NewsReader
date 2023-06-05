@@ -1,6 +1,7 @@
 package com.tqb.newsreader.backend.thanhnien;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.tqb.newsreader.backend.DatabaseHandler;
 import com.tqb.newsreader.backend.RSSFeed;
@@ -15,12 +16,11 @@ public class ThanhNien implements Callback<RSSFeed> {
 
     private static final String BASE_URL = "https://thanhnien.vn";
     private static Context context;
-    public static boolean isReady = false;
-
-    public static RSSFeed rssFeed = new RSSFeed();
+    public boolean isReady = false;
 
     public void latest(Context context)
     {
+        isReady = false;
         this.context = context;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -35,6 +35,7 @@ public class ThanhNien implements Callback<RSSFeed> {
 
     public void byCategory(Context context, String category)
     {
+        isReady = false;
         this.context = context;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -75,7 +76,6 @@ public class ThanhNien implements Callback<RSSFeed> {
             RSSFeed rss = response.body();
             DatabaseHandler db = new DatabaseHandler(context);
             db.importNews(rss);
-            RSSFeed rssFeed = response.body();
             isReady = true;
         } else {
             System.out.println(response.errorBody());

@@ -2,25 +2,27 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    app:cardBackgroundColor="#FFFFFF">
+
     <RadioButton
-        android:layout_margin="5dp"
-        android:background="@drawable/btn_states"
         android:id="@+id/recycler_button"
-        android:minWidth="100dp"
-        android:minHeight="48dp"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@drawable/btn_states_text"
-        android:text="@string/news_feed_topic"
+        android:layout_margin="5dp"
+        android:background="@drawable/btn_states"
         android:button="@android:color/transparent"
-        android:textSize="14sp"
-        android:textAllCaps="false"
         android:fontFamily="@font/noto_sans_med"
-        android:textAlignment="center"
+        android:minWidth="100dp"
+        android:minHeight="48dp"
         android:paddingHorizontal="24dp"
-        />
+        android:text="@string/news_feed_topic"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@drawable/btn_states_text"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.cardview.widget.CardView>

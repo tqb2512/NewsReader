@@ -20,6 +20,7 @@ public class VnExpress implements Callback<RSSFeed> {
 
     public void latest(Context context)
     {
+        isReady = false;
         this.context = context;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -34,6 +35,7 @@ public class VnExpress implements Callback<RSSFeed> {
 
     public void byCategory(Context context, String category)
     {
+        isReady = false;
         this.context = context;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

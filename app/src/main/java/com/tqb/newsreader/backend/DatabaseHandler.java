@@ -10,6 +10,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.LongFunction;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -29,12 +32,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         for (RSSItem item : rssFeed.getItems()) {
             values.put("title", item.getTitle());
             values.put("link", item.getLink());
-            values.put("description", item.getDescription());
             values.put("pubDate", item.getPubDate());
             values.put("guid", item.getGuid());
-            values.put("image", item.getImage());
+            //image and description in cdata of item description
+            Document doc = Jsoup.parse(item.getDescription());
+            Element img = doc.select("img").first();
+            if (img != null) {
+                values.put("image", img.attr("src"));
+            }
+            values.put("description", Html.fromHtml(doc.body().text()).toString());
             db.insert(TABLE_NAME, null, values);
         }
+        Log.d("DatabaseHandler", "Importing news done");
         db.close();
     }
 
