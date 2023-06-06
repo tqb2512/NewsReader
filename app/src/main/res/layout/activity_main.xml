@@ -83,6 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topic_recycler"
         tools:layout="@layout/fragment_news_feed" />
 
+
     <!-- NavigationBottom: Phần này để đổi Fragment cho từng UI, còn phải làm
     Search, Bookmarks, Settings-->
     <com.google.android.material.bottomnavigation.BottomNavigationView

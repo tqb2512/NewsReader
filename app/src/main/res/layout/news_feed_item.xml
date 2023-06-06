@@ -45,38 +45,38 @@
             android:id="@+id/news_feed_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_feed_src"
-            android:textColor="@color/dark_grey"
-            android:fontFamily="@font/noto_sans_med"
-            android:layout_toEndOf="@id/news_feed_topic"
+            android:layout_alignBottom="@id/news_feed_img"
             android:layout_marginStart="15dp"
-            android:layout_alignBottom="@id/news_feed_img"/>
+            android:layout_toEndOf="@id/news_feed_topic"
+            android:fontFamily="@font/noto_sans_med"
+            android:text="@string/news_feed_src"
+            android:textAlignment="center"
+            android:textColor="@color/dark_grey" />
 
         <TextView
             android:id="@+id/news_feed_topic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_feed_topic"
-            android:textColor="@color/natural_blue"
-            android:fontFamily="@font/noto_sans_bold"
-            android:layout_toEndOf="@id/news_feed_img"
             android:layout_alignBottom="@id/news_feed_img"
-            android:layout_marginStart="30dp"/>
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/news_feed_img"
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="@string/news_feed_topic"
+            android:textAlignment="center"
+            android:textColor="@color/natural_blue" />
 
         <TextView
             android:id="@+id/news_feed_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_feed_date"
-            android:textColor="@color/dark_grey"
-            android:fontFamily="@font/noto_sans_med"
-            android:layout_toEndOf="@id/news_feed_src"
             android:layout_alignBottom="@id/news_feed_img"
             android:layout_marginStart="15dp"
-            android:drawableStart="@drawable/dark_grey_circle"
-            android:drawablePadding="7dp"
+            android:layout_toEndOf="@id/news_feed_src"
+            android:fontFamily="@font/noto_sans_med"
             android:maxLines="1"
-            />
+            android:text="@string/news_feed_date"
+            android:textAlignment="center"
+            android:textColor="@color/dark_grey" />
 
 
     </RelativeLayout>

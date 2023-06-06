@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tqb.newsreader.MainActivity;
 import com.tqb.newsreader.R;
+import com.tqb.newsreader.backend.RSSItem;
 
 public class TopicAdapter extends RecyclerView.Adapter{
 
-    private String[] topics;
+    private final String[] topics;
     private int selectedPosition = 0;
-    private Context context;
+    private final Context context;
 
     public TopicAdapter(Context context, String[] topics) {
         this.context = context;
@@ -40,11 +41,7 @@ public class TopicAdapter extends RecyclerView.Adapter{
         String topic = topics[position];
         RadioButton topicName = ((ViewHolder) holder).topicName;
         topicName.setText(topic);
-        if (selectedPosition == position) {
-            topicName.setChecked(true);
-        } else {
-            topicName.setChecked(false);
-        }
+        topicName.setChecked(selectedPosition == position);
         topicName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +68,7 @@ public class TopicAdapter extends RecyclerView.Adapter{
             topicName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                 }
             });
 

@@ -1,69 +1,59 @@
 package com.tqb.newsreader.backend;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
-
-@Root(name="item", strict=false)
 public class RSSItem {
-    @Element(name="title")
     private String title;
-    @Element(name="description")
-    private String description;
-    @Element(name="pubDate")
-    private String pubDate;
-    @Element(name="link")
     private String link;
-    @Element(name="guid")
-    private String guid;
+    private String description;
+    private String pubDate;
     private String image;
+    private String source;
+    private String topic;
 
-    public RSSItem() {
+    public RSSItem(String title, String link, String pubDate, String image, String descriptionText) {
+        this.title = title;
+        this.link = link;
+        this.pubDate = pubDate;
+        this.image = image;
+        this.description = descriptionText;
     }
 
-    public RSSItem(String _title, String _link, String _description, String _pubDate, String _guid, String _category, String _image, String _author, String _source, int _read, int _favorite) {
-        title = _title;
-        link = _link;
-        description = _description;
-        pubDate = _pubDate;
-        guid = _guid;
-        image = _image;
+    public RSSItem() {
+        this.title = "";
+        this.link = "";
+        this.pubDate = "";
+        this.image = "";
+        this.description = "";
     }
 
     public String getTitle() {
         return title;
     }
-    public void setTitle(String _title) {
-        title = _title;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String _description) {
-        description = _description;
-    }
-    public String getPubDate() {
-        return pubDate;
-    }
-    public void setPubDate(String _pubDate) {
-        pubDate = _pubDate;
+    public void setTitle(String title) {
+        this.title = title;
     }
     public String getLink() {
         return link;
     }
-    public void setLink(String _link) {
-        link = _link;
+    public void setLink(String link) {
+        this.link = link;
     }
-    public String getGuid() {
-        return guid;
+    public String getDescription() {
+        return description;
     }
-    public void setGuid(String _guid) {
-        guid = _guid;
+    public void setDescription(String description) {
+        this.description = description;
     }
-    public String getImage() {
-        return image;
+    public String getPubDate() {
+        return pubDate;
     }
-    public void setImage(String _image) {
-        image = _image;
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
     }
-
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
+    public String getSource() { return source; }
+    public void setSource(String source) { this.source = source; }
+    public String getCategory() { return topic; }
+    public void setCategory(String topic) { this.topic = topic; }
 }
+

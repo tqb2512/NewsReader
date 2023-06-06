@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,19 +13,28 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.tqb.newsreader.MainActivity;
 import com.tqb.newsreader.R;
 import com.tqb.newsreader.backend.RSSItem;
 
+import java.util.List;
+
 public class NewsFeedAdapter extends RecyclerView.Adapter{
 
-    private RSSItem[] items;
+    private final RSSItem[] items;
 
-    private Context context;
+    private final Context context;
 
     public NewsFeedAdapter(Context context, RSSItem[] items) {
         this.context = context;
         this.items = items;
     }
+
+    public NewsFeedAdapter(Context context, List<RSSItem> items) {
+        this.context = context;
+        this.items = items.toArray(new RSSItem[0]);
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(android.view.ViewGroup parent, int viewType) {
@@ -47,13 +57,16 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
         ImageView image = ((ViewHolder) holder).image;
         TextView description = ((ViewHolder) holder).description;
 
-
-        title.setText(item.getTitle());
-        //source.setText(item.getSource());
-        date.setText(item.getPubDate());
         description.setText(item.getDescription());
-        //topic.setText(item.getCategory());
-        Picasso.get().load(item.getImage()).fit().centerCrop().into(image);
+        title.setText(item.getTitle());
+        source.setText(item.getSource());
+        date.setText(item.getPubDate());
+        topic.setText(item.getCategory());
+        if (!item.getImage().isEmpty())
+            Picasso.get().load(item.getImage()).fit().centerCrop().into(image);
+        if (description.getText().length() > 150) {
+            description.setText(description.getText().subSequence(0, 100) + "...");
+        }
     }
 
     @Override
@@ -62,13 +75,13 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private View itemView;
-        private TextView title;
-        private TextView source;
-        private TextView date;
-        private TextView topic;
-        private TextView description;
-        private ImageView image;
+        private final View itemView;
+        private final TextView title;
+        private final TextView source;
+        private final TextView date;
+        private final TextView topic;
+        private final TextView description;
+        private final ImageView image;
         private String link;
 
         public ViewHolder(View itemView) {
@@ -85,7 +98,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
                 @Override
                 public void onClick(View v) {
                     RSSItem item = items[getAdapterPosition()];
-                    Toast.makeText(context, item.getDescription(), Toast.LENGTH_SHORT).show();
+                    link = item.getLink();
+                    MainActivity mainActivity = (MainActivity) context;
+                    MainActivity.openUrl(context, link);
                 }
             });
         }
