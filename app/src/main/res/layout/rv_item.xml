@@ -22,5 +22,4 @@
         android:textAlignment="center"
         android:paddingHorizontal="24dp"
         />
-
 </androidx.cardview.widget.CardView>

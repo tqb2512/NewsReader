@@ -5,7 +5,6 @@ plugins {
 android {
     namespace 'com.tqb.newsreader'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.tqb.newsreader"
         minSdk 24
