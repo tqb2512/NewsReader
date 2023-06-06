@@ -2,17 +2,19 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_margin="15dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
+        android:layout_height="match_parent"
+        >
+        <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:id="@+id/news_feed_img"
             android:padding="5dp"
+            app:shapeAppearanceOverlay="@style/rounded_corner"
             android:contentDescription="@string/img_des_feed"/>
 
         <TextView
@@ -36,7 +38,7 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/news_feed_img"
             android:fontFamily="@font/noto_sans_med"
-            android:maxLines="4"
+            android:maxLines="2"
             android:textSize="13sp"
             android:text="Description"
             android:textColor="@color/dark_grey" />
