@@ -10,12 +10,4 @@
     <color name="dark_grey">#5A5A5A</color>
     <color name="light_grey">#D3D3D3</color>
     <color name="natural_blue">#69BDFD</color>
-
-    <color name="color_Primary">#4f2a81</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
-<!--    Switch_color-->
-    <color name="disable_foreground_grey">#42221f1f</color>
-    <color name="disable_thumb_grey">#1c000000</color>
 </resources>
