@@ -8,6 +8,7 @@ import android.text.Html;
 import androidx.appcompat.app.AlertDialog;
 
 import com.tqb.newsreader.MainActivity;
+import com.tqb.newsreader.NewsFeed;
 import com.tqb.newsreader.R;
 
 import org.jsoup.Jsoup;
@@ -79,7 +80,7 @@ public class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
             }
             RSSFeed f = mergeFeed(feed);
             f = sortItemListByPubDate(f);
-            MainActivity.setFeed(context, f);
+            NewsFeed.setFeed(context, f);
         }
         MainActivity.loadingDialog.dismiss();
         this.cancel(true);

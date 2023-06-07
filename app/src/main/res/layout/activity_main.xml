@@ -61,38 +61,7 @@
     Ngoài đó còn phải code chọn 1 nút radio mặc định cho giống UI tham khảo
     lúc mới khởi động app.
     -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/topic_recycler_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_news"
-        android:elevation="50dp"
-        android:layout_marginTop="10dp"
-        app:contentPaddingTop="10dp"
-        app:contentPaddingBottom="10dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/topic_recycler"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:scrollbars="none"
-            />
-    </androidx.cardview.widget.CardView>
 
-    <!-- recycler view thứ 2: Fragment gồm RecyclerView của mấy cái news_feed_item
-    Cái này thì code như bth, nhưng lưu ý là cái này là Fragment nên phải code
-    trong NewsFeed trong phần backend-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/news_feed"
-        android:name="com.tqb.newsreader.NewsFeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topic_recycler_layout"
-        tools:layout="@layout/fragment_news_feed" />
 
 
     <!-- NavigationBottom: Phần này để đổi Fragment cho từng UI, còn phải làm
@@ -107,5 +76,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:contentPaddingBottom="10dp"
+        app:contentPaddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_news">
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

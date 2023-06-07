@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tqb.newsreader.MainActivity;
+import com.tqb.newsreader.NewsFeed;
 import com.tqb.newsreader.R;
 import com.tqb.newsreader.backend.RSSItem;
 
@@ -45,8 +46,7 @@ public class TopicAdapter extends RecyclerView.Adapter{
         topicName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) context;
-                mainActivity.setTopic(topics[position]);
+                NewsFeed.setTopic(topics[position]);
                 selectedPosition = position;
                 notifyDataSetChanged();
             }
