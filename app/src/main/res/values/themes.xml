@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NewsReader" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.NewsReader" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,4 +14,25 @@
         <!-- Customize your theme here. -->
 
     </style>
+
+    <style name="Theme.Switch" parent="Theme.AppCompat.Light">
+        <!-- active track color (30% transparency) -->
+        <item name="colorControlActivated"> @color/black
+        </item>
+
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal"> @color/white
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/dark_grey
+        </item>
+    </style>
+
+    <!-- Ảnh bo góc cho ShapeableImageView -->
+    <style name="rounded_corner">
+        <item name="cornerSize">10dp</item>
+    </style>
+
 </resources>
