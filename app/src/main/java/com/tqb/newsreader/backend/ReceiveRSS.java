@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.text.Html;
+import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -25,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +101,11 @@ public class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
             NodeList items = rootElement.getElementsByTagName("item");
             feed = new RSSFeed();
             List<RSSItem> rssItems = new ArrayList<>();
-            for (int i = 0; i < 15; i++) {
+            int size = items.getLength();
+            if (size > 15) {
+                size = 15;
+            }
+            for (int i = 0; i < size; i++) {
                 org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
                 RSSItem rssItem = new RSSItem();
                 rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
@@ -130,6 +136,8 @@ public class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
                     String[] temp = sourceAndTopic.split("-");
                     rssItem.setSource(temp[1].trim());
                     rssItem.setCategory(temp[0].trim());
+                } else if (sourceAndTopic.contains(" - Google Tin tức")) {
+                    rssItem.setSource(item.getElementsByTagName("source").item(0).getTextContent());
                 } else {
                     rssItem.setSource(sourceAndTopic);
                 }

@@ -63,8 +63,8 @@ public class NewsFeed extends Fragment {
                 .setView(R.layout.loading_dialog)
                 .setCancelable(false)
                 .create();
-        MainActivity.loadingDialog.show();
-        receiveRSS.execute(new RSSAsyncParam(context, "latest"));
+        //MainActivity.loadingDialog.show();
+        //receiveRSS.execute(new RSSAsyncParam(context, "latest"));
         return view;
     }
 

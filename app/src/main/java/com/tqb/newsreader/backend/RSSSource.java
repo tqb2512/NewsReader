@@ -69,6 +69,10 @@ public class RSSSource {
                         "https://tuoitre.vn/rss/khoa-hoc.rss"
                 };
                 break;
+            default:
+                this.urls = new String[]{
+                        "https://news.google.com/rss/search?q=" + topic + "?hl%3Dvi&gl=VN&ceid=VN:vi&hl=vi"
+                };
         }
     }
 
