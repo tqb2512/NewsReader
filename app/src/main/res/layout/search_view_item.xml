@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:padding="15dp"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:id="@+id/search_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/news_feed_title"
+            android:fontFamily="@font/noto_sans_med"
+            android:textColor="@color/black"
+            android:maxLines="3"/>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_item_title"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/search_item_src"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/news_feed_src"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/noto_sans_med"
+                android:textColor="@color/dark_grey"
+                android:maxLines="1"/>
+            <TextView
+                android:id="@+id/search_item_date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/news_feed_date"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/noto_sans_med"
+                android:maxLines="1"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
