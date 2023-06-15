@@ -7,4 +7,5 @@
     <string name="news_feed_src">source</string>
     <string name="news_feed_topic">topic</string>
     <string name="news_feed_date">ngày đăng</string>
+    <string name="settings">Settings</string>
 </resources>

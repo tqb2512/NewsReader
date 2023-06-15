@@ -77,9 +77,13 @@
             android:fontFamily="@font/noto_sans_med"
             android:maxLines="1"
             android:text="@string/news_feed_date"
-            android:textAlignment="center"
-            android:textColor="@color/dark_grey" />
-
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/news_feed_topic"
+            android:background="@color/light_grey"
+            android:layout_marginTop="8dp"/>
 
     </RelativeLayout>
 
