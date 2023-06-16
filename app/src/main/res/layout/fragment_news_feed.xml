@@ -26,9 +26,6 @@
             />
     </androidx.cardview.widget.CardView>
 
-    <!-- recycler view thứ 2: Fragment gồm RecyclerView của mấy cái news_feed_item
-    Cái này thì code như bth, nhưng lưu ý là cái này là Fragment nên phải code
-    trong NewsFeed trong phần backend-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/news_feed"
         android:name="com.tqb.newsreader.NewsFeed"

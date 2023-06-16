@@ -78,6 +78,7 @@
             android:maxLines="1"
             android:text="@string/news_feed_date"
             />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

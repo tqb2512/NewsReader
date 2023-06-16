@@ -34,6 +34,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static WebView webView;
     public static AlertDialog loadingDialog;
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment fragment = new NewsFeed(this);
         loadFragment(fragment);
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
 
     public static void openUrl(Context context, String url) {
@@ -70,4 +73,19 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if(item.getItemId() == R.id.action_home) {
+                loadFragment(new NewsFeed(MainActivity.this));
+                bottomNavigationView.getMenu().getItem(0).setChecked(true);
+            } else if (item.getItemId() == R.id.action_search) {
+                loadFragment(new Search(MainActivity.this));
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
+            }
+            return false;
+        }
+    };
+
 }

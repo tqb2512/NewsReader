@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.tqb.newsreader.MainActivity;
 import com.tqb.newsreader.NewsFeed;
 import com.tqb.newsreader.R;
+import com.tqb.newsreader.Search;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,9 +35,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
+public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
     private Context context;
-    private RSSFeed[] feed;
+    public RSSFeed[] feed;
     @Override
     protected String[] doInBackground(RSSAsyncParam... rssAsyncParam) {
         context = rssAsyncParam[0].getContext();
@@ -67,7 +68,6 @@ public class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
     }
 
     @Override

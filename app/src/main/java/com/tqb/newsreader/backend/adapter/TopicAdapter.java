@@ -4,17 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tqb.newsreader.MainActivity;
 import com.tqb.newsreader.NewsFeed;
 import com.tqb.newsreader.R;
-import com.tqb.newsreader.backend.RSSItem;
 
 public class TopicAdapter extends RecyclerView.Adapter{
 
@@ -32,7 +27,7 @@ public class TopicAdapter extends RecyclerView.Adapter{
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.rv_item, parent, false);
+        View view = inflater.inflate(R.layout.topic_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

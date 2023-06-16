@@ -1,5 +1,6 @@
 package com.tqb.newsreader;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -21,12 +22,6 @@ import com.tqb.newsreader.backend.adapter.NewsFeedAdapter;
 import com.tqb.newsreader.backend.adapter.TopicAdapter;
 
 import java.util.List;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NewsFeed#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class NewsFeed extends Fragment {
 
     private static Context context;
@@ -35,13 +30,12 @@ public class NewsFeed extends Fragment {
     static NewsFeedAdapter newsFeedAdapter;
     static TopicAdapter topicAdapter;
     public static List<RSSItem> items;
+
     String[] topics = {"Latest", "World", "Business", "Technology", "Entertainment", "Sports", "Science", "Health"};
 
     public NewsFeed(Context context) {
         this.context = context;
     }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +52,7 @@ public class NewsFeed extends Fragment {
         topicRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         newsFeedRecyclerView = view.findViewById(R.id.news_feed);
         newsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        ReceiveRSS receiveRSS = new ReceiveRSS();
-        MainActivity.loadingDialog = new AlertDialog.Builder(context)
-                .setView(R.layout.loading_dialog)
-                .setCancelable(false)
-                .create();
-        //MainActivity.loadingDialog.show();
-        //receiveRSS.execute(new RSSAsyncParam(context, "latest"));
+        setTopic("latest");
         return view;
     }
 
@@ -80,7 +68,25 @@ public class NewsFeed extends Fragment {
                 .setCancelable(false)
                 .create();
         MainActivity.loadingDialog.show();
-        ReceiveRSS receiveRSS = new ReceiveRSS();
+        ReceiveRSS receiveRSS = new ReceiveRSS() {
+            @Override
+            protected void onPostExecute(String[] s) {
+                super.onPostExecute(s);
+                if (s != null) {
+                    feed = new RSSFeed[s.length];
+                    int index = 0;
+                    for (String temp : s) {
+                        feed[index] = parseToRSS(temp);
+                        index++;
+                    }
+                    RSSFeed f = mergeFeed(feed);
+                    f = sortItemListByPubDate(f);
+                    NewsFeed.setFeed(context, f);
+                }
+                MainActivity.loadingDialog.dismiss();
+                this.cancel(true);
+            }
+        };
         receiveRSS.execute(new RSSAsyncParam(context, topic.toLowerCase()));
     }
 }
