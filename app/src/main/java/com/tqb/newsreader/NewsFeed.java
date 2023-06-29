@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.JsonObject;
 import com.tqb.newsreader.backend.RSSAsyncParam;
 import com.tqb.newsreader.backend.RSSFeed;
 import com.tqb.newsreader.backend.RSSItem;
@@ -31,10 +32,22 @@ public class NewsFeed extends Fragment {
     static TopicAdapter topicAdapter;
     public static List<RSSItem> items;
 
-    String[] topics = {"Latest", "World", "Business", "Technology", "Entertainment", "Sports", "Science", "Health"};
+    String[] topics = {};
 
     public NewsFeed(Context context) {
         this.context = context;
+        //read topic from main activity function
+        JsonObject jsonObject = MainActivity.readTopicsFromFile(context);
+        String[] temps = new String[jsonObject.size()];
+        //json object {topic_name:1, topic_name:1, topic_name:0}
+        int index = 0;
+        for (String key : jsonObject.keySet()) {
+            if (jsonObject.get(key).getAsString().equals("1")) {
+                temps[index] = key;
+            }
+            index++;
+        }
+        topics = temps;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {

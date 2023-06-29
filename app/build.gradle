@@ -29,6 +29,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'org.jsoup:jsoup:1.16.1'
     implementation("com.squareup.moshi:moshi:1.14.0")
