@@ -25,7 +25,7 @@
             android:layout_toEndOf="@id/news_feed_img"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans_bold"
-            android:maxLines="3"
+            android:maxLines="2"
             android:text="@string/news_feed_title"
             android:textColor="@color/black"
             android:textSize="@dimen/_10ssp" />
@@ -34,7 +34,7 @@
             android:id="@+id/news_feed_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/news_feed_topic"
+            android:layout_above="@id/news_feed_src"
             android:layout_below="@id/news_feed_title"
             android:layout_marginStart="@dimen/_19sdp"
             android:layout_marginTop="@dimen/_5sdp"
@@ -42,52 +42,58 @@
             android:layout_toEndOf="@id/news_feed_img"
             android:fontFamily="@font/noto_sans_med"
             android:maxLines="3"
+            android:ellipsize="end"
             android:text="Description"
             android:textColor="@color/dark_grey"
-            app:autoSizeTextType="uniform" />
-
-        <TextView
-            android:id="@+id/news_feed_topic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/news_feed_img"
-            android:layout_marginStart="@dimen/_19sdp"
-            android:layout_toEndOf="@id/news_feed_img"
-            android:fontFamily="@font/noto_sans_bold"
-            android:text="@string/news_feed_topic"
-            android:textAlignment="center"
-            android:textColor="@color/natural_blue"
-            android:textSize="@dimen/_8ssp" />
+            app:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="@dimen/text_size_small"
+            android:autoSizeMaxTextSize="@dimen/text_size_medium"
+            android:autoSizeStepGranularity="2sp"/>
 
         <TextView
             android:id="@+id/news_feed_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/news_feed_img"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_toEndOf="@id/news_feed_topic"
+            android:layout_marginStart="@dimen/_19sdp"
+            android:layout_toEndOf="@id/news_feed_img"
             android:fontFamily="@font/noto_sans_med"
             android:text="@string/news_feed_src"
-            android:textAlignment="center"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/_8ssp" />
+            android:textAlignment="textStart"
+            android:textColor="@color/natural_blue"
+            android:autoSizeTextType="uniform"
+            />
 
         <TextView
             android:id="@+id/news_feed_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/news_feed_img"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_toEndOf="@id/news_feed_src"
+            android:layout_marginStart="@dimen/_85sdp"
+            android:layout_toEndOf="@id/news_feed_img"
             android:fontFamily="@font/noto_sans_med"
+            android:textColor="@color/dark_grey"
+            android:textAlignment="textStart"
             android:maxLines="1"
             android:text="@string/news_feed_date"
-            android:textSize="@dimen/_8ssp" />
+            android:autoSizeTextType="uniform"
+            />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignBottom="@id/news_feed_img"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="-5dp"
+            android:layout_marginBottom="-14dp"
+            android:clickable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/triple_dots" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
-            android:layout_below="@id/news_feed_topic"
+            android:layout_below="@id/news_feed_src"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/light_grey" />
 
