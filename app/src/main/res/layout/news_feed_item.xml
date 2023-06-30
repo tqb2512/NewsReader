@@ -59,7 +59,7 @@
             android:text="@string/news_feed_src"
             android:textAlignment="textStart"
             android:textColor="@color/natural_blue"
-            android:autoSizeTextType="uniform"
+            android:textSize="@dimen/_8ssp"
             />
 
         <TextView
@@ -74,7 +74,7 @@
             android:textAlignment="textStart"
             android:maxLines="1"
             android:text="@string/news_feed_date"
-            android:autoSizeTextType="uniform"
+            android:textSize="@dimen/_8ssp"
             />
 
         <ImageView
