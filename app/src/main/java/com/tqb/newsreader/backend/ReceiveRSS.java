@@ -111,12 +111,7 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                 rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
                 rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
                 String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
-                if (pubDate.contains(",")) {
-                    String[] temp = pubDate.split(",");
-                    rssItem.setPubDate(temp[1].trim());
-                } else {
-                    rssItem.setPubDate(pubDate);
-                }
+                rssItem.setPubDate(formatDate(pubDate));
                 Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
                 Element img = doc.select("img").first();
                 if (img != null) {
@@ -126,16 +121,16 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                 String sourceAndTopic = rootElement.getElementsByTagName("title").item(0).getTextContent();
                 if (sourceAndTopic.contains(" | ")) {
                     String[] temp = sourceAndTopic.split("\\|");
-                    rssItem.setSource(temp[0].trim());
-                    rssItem.setCategory(temp[1].trim());
+                    rssItem.setSource(temp[1].trim());
+                    rssItem.setCategory(temp[0].trim());
                 } else if (sourceAndTopic.contains(" - VnExpress RSS")) {
-                    String[] temp = sourceAndTopic.split("-");
-                    rssItem.setSource(temp[0].trim());
-                    rssItem.setCategory(temp[1].trim());
-                } else if (sourceAndTopic.contains("Tuổi Trẻ Online -")) {
                     String[] temp = sourceAndTopic.split("-");
                     rssItem.setSource(temp[1].trim());
                     rssItem.setCategory(temp[0].trim());
+                } else if (sourceAndTopic.contains("Tuổi Trẻ Online -")) {
+                    String[] temp = sourceAndTopic.split("-");
+                    rssItem.setSource(temp[0].trim());
+                    rssItem.setCategory(temp[1].trim());
                 } else if (sourceAndTopic.contains(" - Google Tin tức")) {
                     rssItem.setSource(item.getElementsByTagName("source").item(0).getTextContent());
                 } else {
@@ -148,6 +143,20 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
             e.printStackTrace();
         }
         return feed;
+    }
+
+    public String formatDate(String date){
+        /*VNExpress example: Sat, 01 Jul 2023 03:05:51 +0700
+        ThanhNien example: Sat, 01 Jul 23 04:22:12 +0700
+        TuoiTre example: Sat, 01 Jul 2023 04:22:03 GMT+7
+        format to: Sat, 01 Jul 23*/
+        String[] temp = date.split(" ");
+        String result = "";
+        if (temp[3].length() == 2) {
+            temp[3] = "20" + temp[3];
+        }
+        result = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[3];
+        return result;
     }
 
     public RSSFeed mergeFeed(RSSFeed[] feeds) {

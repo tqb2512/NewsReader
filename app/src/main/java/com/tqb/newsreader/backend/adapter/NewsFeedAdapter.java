@@ -53,7 +53,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
         TextView title = ((ViewHolder) holder).title;
         TextView source = ((ViewHolder) holder).source;
         TextView date = ((ViewHolder) holder).date;
-        TextView topic = ((ViewHolder) holder).topic;
+        //TextView topic = ((ViewHolder) holder).topic;
         ImageView image = ((ViewHolder) holder).image;
         TextView description = ((ViewHolder) holder).description;
 
@@ -61,7 +61,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
         title.setText(item.getTitle());
         source.setText(item.getSource());
         date.setText(item.getPubDate());
-        topic.setText(item.getCategory());
+        //topic.setText(item.getCategory());
         if (!item.getImage().isEmpty())
             Picasso.get().load(item.getImage()).fit().centerCrop().into(image);
         if (description.getText().length() > 150) {
@@ -79,7 +79,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
         private final TextView title;
         private final TextView source;
         private final TextView date;
-        private final TextView topic;
+        //private final TextView topic;
         private final TextView description;
         private final ImageView image;
         private String link;
@@ -90,7 +90,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
             title = itemView.findViewById(R.id.news_feed_title);
             source = itemView.findViewById(R.id.news_feed_src);
             date = itemView.findViewById(R.id.news_feed_date);
-            topic = itemView.findViewById(R.id.news_feed_topic);
+            //topic = itemView.findViewById(R.id.news_feed_topic);
             image = itemView.findViewById(R.id.news_feed_img);
             description = itemView.findViewById(R.id.news_feed_des);
 

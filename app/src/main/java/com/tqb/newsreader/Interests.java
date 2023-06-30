@@ -5,19 +5,30 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.JsonObject;
+import com.tqb.newsreader.backend.adapter.InterestsAdapter;
 
 import java.io.File;
 import java.io.FileWriter;
 
 public class Interests extends AppCompatActivity {
+
+    private static InterestsAdapter interestsAdapter;
+    private static RecyclerView recyclerView;
+    private static JsonObject jsonObject;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interests);
         ImageView back = findViewById(R.id.return_button);
         back.setOnClickListener(v -> backToMain());
+        recyclerView = findViewById(R.id.interest_list);
+        jsonObject = readTopicsFromFile(this);
+        interestsAdapter = new InterestsAdapter(this, jsonObject);
+        recyclerView.setAdapter(interestsAdapter);
+        recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
     }
 
     private void backToMain() {

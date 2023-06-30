@@ -39,15 +39,18 @@ public class NewsFeed extends Fragment {
         //read topic from main activity function
         JsonObject jsonObject = MainActivity.readTopicsFromFile(context);
         String[] temps = new String[jsonObject.size()];
-        //json object {topic_name:1, topic_name:1, topic_name:0}
         int index = 0;
         for (String key : jsonObject.keySet()) {
             if (jsonObject.get(key).getAsString().equals("1")) {
                 temps[index] = key;
+                index++;
             }
-            index++;
         }
-        topics = temps;
+        String[] result = new String[index];
+        for (int i = 0; i < index; i++) {
+            result[i] = temps[i];
+        }
+        topics = result;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
