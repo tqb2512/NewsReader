@@ -14,9 +14,8 @@
             android:id="@+id/topic_recycler_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="50dp"
-            app:contentPaddingBottom="10dp"
-            app:contentPaddingTop="10dp"
+            app:contentPaddingBottom="@dimen/_10sdp"
+            app:contentPaddingTop="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -24,7 +23,7 @@
                 android:id="@+id/topic_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:scrollbars="none" />
         </androidx.cardview.widget.CardView>
 
