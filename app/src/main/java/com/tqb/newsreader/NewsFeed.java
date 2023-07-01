@@ -2,6 +2,7 @@ package com.tqb.newsreader;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.tqb.newsreader.backend.RSSAsyncParam;
 import com.tqb.newsreader.backend.RSSFeed;
@@ -22,6 +26,7 @@ import com.tqb.newsreader.backend.ReceiveRSS;
 import com.tqb.newsreader.backend.adapter.NewsFeedAdapter;
 import com.tqb.newsreader.backend.adapter.TopicAdapter;
 
+import java.io.File;
 import java.util.List;
 public class NewsFeed extends Fragment {
 
@@ -31,6 +36,7 @@ public class NewsFeed extends Fragment {
     static NewsFeedAdapter newsFeedAdapter;
     static TopicAdapter topicAdapter;
     public static List<RSSItem> items;
+    public static RSSItem slectedItem;
 
     String[] topics = {};
 
@@ -69,7 +75,36 @@ public class NewsFeed extends Fragment {
         newsFeedRecyclerView = view.findViewById(R.id.news_feed);
         newsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         setTopic("latest");
+        registerForContextMenu(newsFeedRecyclerView);
         return view;
+    }
+
+    @Override
+    public void onCreateContextMenu(android.view.ContextMenu menu, View v, android.view.ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.news_feed_cm, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == R.id.option_save) {
+            MainActivity.saveNewToFile(context, slectedItem);
+            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (item.getItemId() == R.id.option_share) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, slectedItem.getLink());
+            startActivity(Intent.createChooser(intent, "Share"));
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
+        }
+    }
+
+    public static void openNewsFeedContextMenu(RSSItem item) {
+        newsFeedRecyclerView.showContextMenu();
+        slectedItem = item;
     }
 
     public static void setFeed(Context context, RSSFeed feed) {

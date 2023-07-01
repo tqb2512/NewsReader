@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.tqb.newsreader.Bookmark;
 import com.tqb.newsreader.MainActivity;
 import com.tqb.newsreader.NewsFeed;
 import com.tqb.newsreader.R;
@@ -20,18 +21,18 @@ import com.tqb.newsreader.backend.RSSItem;
 
 import java.util.List;
 
-public class NewsFeedAdapter extends RecyclerView.Adapter{
+public class BookmarkAdapter extends RecyclerView.Adapter{
 
     private final RSSItem[] items;
 
     private final Context context;
 
-    public NewsFeedAdapter(Context context, RSSItem[] items) {
+    public BookmarkAdapter(Context context, RSSItem[] items) {
         this.context = context;
         this.items = items;
     }
 
-    public NewsFeedAdapter(Context context, List<RSSItem> items) {
+    public BookmarkAdapter(Context context, List<RSSItem> items) {
         this.context = context;
         this.items = items.toArray(new RSSItem[0]);
     }
@@ -69,7 +70,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsFeed.openNewsFeedContextMenu(item);
+                Bookmark.openNewsFeedContextMenu(item);
             }
         });
     }
@@ -113,3 +114,4 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
         }
     }
 }
+

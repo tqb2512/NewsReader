@@ -6,52 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:contentDescription="news_logo"
-        android:id="@+id/img_news"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:adjustViewBounds="true"
-        android:gravity="center"
-        android:maxWidth="28dp"
-        android:maxHeight="28dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/news_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        style="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-120dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/noto_sans_bold"
-        android:text="@string/news_24_app_title"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.42"
-        app:layout_constraintStart_toEndOf="@id/img_news"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:contentDescription="noti_bell"
-        android:id="@+id/noti_bell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:adjustViewBounds="true"
-        android:maxWidth="28dp"
-        android:maxHeight="28dp"
-        android:layout_marginEnd="16dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/noti_yes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
@@ -65,14 +19,15 @@
 
     <FrameLayout
         android:id="@+id/frame_layout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:background="#00000000"
         app:contentPaddingBottom="10dp"
         app:contentPaddingTop="10dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_news">
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 

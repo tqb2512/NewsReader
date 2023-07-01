@@ -15,13 +15,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.moshi.Json;
 import com.tqb.newsreader.backend.RSSAsyncParam;
@@ -33,12 +37,14 @@ import com.tqb.newsreader.backend.adapter.TopicAdapter;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static WebView webView;
     public static AlertDialog loadingDialog;
     BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,10 +112,12 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.action_search) {
                 loadFragment(new Search(MainActivity.this));
                 bottomNavigationView.getMenu().getItem(1).setChecked(true);
-            } else if (item.getItemId() == R.id.action_settings)
-            {
+            } else if (item.getItemId() == R.id.action_settings) {
                 loadFragment(new Settings(MainActivity.this));
                 bottomNavigationView.getMenu().getItem(3).setChecked(true);
+            } else if (item.getItemId() == R.id.action_bookmark) {
+                loadFragment(new Bookmark(MainActivity.this));
+                bottomNavigationView.getMenu().getItem(2).setChecked(true);
             }
             return false;
         }
@@ -140,4 +148,100 @@ public class MainActivity extends AppCompatActivity {
         return jsonObject;
     }
 
+    public static void saveNewToFile(Context context, RSSItem item)
+    {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(item);
+        File file = new File(context.getFilesDir(), "news.txt");
+        if (!file.exists())
+        {
+            try {
+                file.createNewFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            java.util.Scanner scanner = new java.util.Scanner(file);
+            while (scanner.hasNextLine())
+            {
+                String line = scanner.nextLine();
+                if (line.equals(jsonString))
+                {
+                    scanner.close();
+                    return;
+                }
+            }
+            scanner.close();
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(jsonString + "\n");
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void logNew(Context context)
+    {
+        File file = new File(context.getFilesDir(), "news.txt");
+        try {
+            java.util.Scanner scanner = new java.util.Scanner(file);
+            while (scanner.hasNextLine())
+            {
+                String line = scanner.nextLine();
+                Gson gson = new Gson();
+                RSSItem item = gson.fromJson(line, RSSItem.class);
+                Log.d("News", item.getTitle());
+            }
+            scanner.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteNewFromFile(Context context, RSSItem item) {
+        File file = new File(context.getFilesDir(), "news.txt");
+        try {
+            java.util.Scanner scanner = new java.util.Scanner(file);
+            List<String> lines = new ArrayList<>();
+            while (scanner.hasNextLine())
+            {
+                String line = scanner.nextLine();
+                Gson gson = new Gson();
+                RSSItem newItem = gson.fromJson(line, RSSItem.class);
+                if (!newItem.getTitle().equals(item.getTitle()))
+                {
+                    lines.add(line);
+                }
+            }
+            scanner.close();
+            FileWriter fileWriter = new FileWriter(file);
+            for (String line : lines)
+            {
+                fileWriter.write(line + "\n");
+            }
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<RSSItem> readNewsFromFile(Context context) {
+        File file = new File(context.getFilesDir(), "news.txt");
+        List<RSSItem> items = new ArrayList<>();
+        try {
+            java.util.Scanner scanner = new java.util.Scanner(file);
+            while (scanner.hasNextLine())
+            {
+                String line = scanner.nextLine();
+                Gson gson = new Gson();
+                RSSItem item = gson.fromJson(line, RSSItem.class);
+                items.add(item);
+            }
+            scanner.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
 }

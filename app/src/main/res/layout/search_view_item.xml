@@ -9,20 +9,11 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_15sdp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/search_item_img"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:contentDescription="@string/img_des_feed"
-            android:padding="@dimen/_5sdp"
-            app:shapeAppearanceOverlay="@style/rounded_corner" />
-
         <TextView
             android:id="@+id/search_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_19sdp"
-            android:layout_toEndOf="@id/search_item_img"
             android:ellipsize="end"
             android:fontFamily="@font/noto_sans_bold"
             android:maxLines="2"
@@ -31,69 +22,29 @@
             android:textSize="@dimen/_10ssp" />
 
         <TextView
-            android:id="@+id/news_feed_des"
+            android:id="@+id/search_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/search_item_src"
-            android:layout_below="@id/search_item_img"
-            android:layout_marginStart="@dimen/_19sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_7sdp"
-            android:layout_toEndOf="@id/search_item_img"
-            android:ellipsize="end"
+            android:layout_marginStart="@dimen/_185sdp"
             android:fontFamily="@font/noto_sans_med"
-            android:maxLines="3"
-            android:text="Description"
+            android:maxLines="1"
+            android:text="@string/news_feed_date"
+            android:textAlignment="textStart"
             android:textColor="@color/dark_grey"
-            app:autoSizeTextType="none"
-            android:textSize="@dimen/_10ssp"/>
+            android:textSize="@dimen/_8ssp"
+            android:layout_below="@id/search_item_title"/>
 
         <TextView
             android:id="@+id/search_item_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/search_item_img"
             android:layout_marginStart="@dimen/_19sdp"
-            android:layout_toEndOf="@id/search_item_img"
             android:fontFamily="@font/noto_sans_med"
             android:text="@string/news_feed_src"
             android:textAlignment="textStart"
             android:textColor="@color/natural_blue"
             android:textSize="@dimen/_8ssp"
-            />
-
-        <TextView
-            android:id="@+id/search_item_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/search_item_img"
-            android:layout_marginStart="@dimen/_85sdp"
-            android:layout_toEndOf="@id/search_item_img"
-            android:fontFamily="@font/noto_sans_med"
-            android:textColor="@color/dark_grey"
-            android:textAlignment="textStart"
-            android:maxLines="1"
-            android:text="@string/news_feed_date"
-            android:textSize="@dimen/_8ssp"
-            />
-
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignBottom="@id/search_item_img"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="-5dp"
-            android:layout_marginBottom="-14dp"
-            android:clickable="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/triple_dots" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_below="@id/search_item_src"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:background="@color/light_grey" />
+            android:layout_below="@id/search_item_title"/>
 
     </RelativeLayout>
 

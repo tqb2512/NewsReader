@@ -71,9 +71,7 @@ public class Search extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.length() == 0) {
-                    searchFeedRecyclerView.setAdapter(new SearchFeedAdapter(context, items));
-                }
+
                 return false;
             }
         });
