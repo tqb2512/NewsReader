@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:visibility="visible"
-    app:cardBackgroundColor="#FFFFFF"
+    app:cardBackgroundColor="#00FFFFFF"
     app:cardElevation="0dp"
     app:strokeColor="#00000000"
     app:strokeWidth="0dp">
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_29sdp"
         android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/btn_states"
+        style="@style/topic_btn_color"
         android:button="@android:color/transparent"
         android:fontFamily="@font/noto_sans_med"
         android:minWidth="@dimen/_45sdp"
@@ -23,7 +23,6 @@
         android:text="@string/news_feed_topic"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@drawable/btn_states_text"
         android:textSize="@dimen/_10ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

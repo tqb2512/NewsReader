@@ -11,15 +11,18 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
+            app:cardBackgroundColor="#00FFFFFF"
             android:id="@+id/topic_recycler_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentPaddingBottom="@dimen/_10sdp"
             app:contentPaddingTop="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:outlineProvider="none">
 
             <androidx.recyclerview.widget.RecyclerView
+
                 android:id="@+id/topic_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

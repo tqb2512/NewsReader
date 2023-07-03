@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     app:cardElevation="0dp"
     app:strokeColor="#00000000"
-    app:strokeWidth="0dp">
+    app:strokeWidth="0dp"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,7 +31,7 @@
             android:fontFamily="@font/noto_sans_bold"
             android:maxLines="2"
             android:text="@string/news_feed_title"
-            android:textColor="@color/black"
+            style="@style/news_feed_title_text"
             android:textSize="@dimen/_10ssp" />
 
         <TextView
