@@ -15,18 +15,18 @@
             android:id="@+id/topic_recycler_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentPaddingBottom="@dimen/_10sdp"
-            app:contentPaddingTop="@dimen/_10sdp"
+            app:contentPaddingBottom="@dimen/_5sdp"
+            app:contentPaddingTop="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:outlineProvider="none">
+            android:outlineProvider="bounds">
 
             <androidx.recyclerview.widget.RecyclerView
 
                 android:id="@+id/topic_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_3sdp"
                 android:scrollbars="none" />
         </androidx.cardview.widget.CardView>
 
@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_below="@+id/topic_recycler_layout"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topic_recycler_layout" />

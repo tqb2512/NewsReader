@@ -3,8 +3,8 @@
     <style name="Theme.NewsReader" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/dark_grey</item>
+        <item name="colorOnPrimary">@color/dark_grey</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -12,25 +12,19 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
     </style>
 
     <style name="Theme.Switch" parent="Theme.AppCompat.Light">
         <!-- active track color (30% transparency) -->
         <item name="colorControlActivated"> @color/dark_grey
         </item>
-
-
         <!-- inactive thumb color -->
         <item name="colorSwitchThumbNormal"> @color/white
         </item>
-
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">@color/dark_grey
         </item>
-
     </style>
-
     <!-- Ảnh bo góc cho ShapeableImageView -->
     <style name="rounded_corner">
         <item name="cornerSize">10dp</item>
@@ -58,5 +52,27 @@
         </item>
     </style>
 
+    <style name="news_feed_date_text">
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="triple_dots_color">
+        <item name="android:src">@drawable/triple_dots</item>
+    </style>
+
+    <style name="search_bar_color">
+        <item name="android:editTextColor">@color/black</item>
+        <item name="android:textColorHint">@color/dark_grey</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/black</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/black</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/white</item>
+    </style>
 
 </resources>
