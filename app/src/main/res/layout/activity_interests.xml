@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/return_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:src="@drawable/chevron_left">
 
         </ImageView>
@@ -25,12 +25,12 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_50sdp"
             android:fontFamily="@font/noto_sans_med"
             android:text="Interests"
             android:textColor="?attr/colorSecondary"
-            android:textSize="17sp">
+            android:textSize="@dimen/_13ssp">
 
         </TextView>
 

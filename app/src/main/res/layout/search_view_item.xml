@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="#00000000"
+    android:backgroundTint="#00000000"
+    app:cardElevation="0dp"
+    app:strokeColor="#00000000"
+    app:strokeWidth="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/_15sdp">
+        android:background="#00000000"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp">
 
         <TextView
             android:id="@+id/search_item_title"
+            style="@style/news_feed_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_19sdp"
@@ -18,34 +27,39 @@
             android:fontFamily="@font/noto_sans_bold"
             android:maxLines="2"
             android:text="@string/news_feed_title"
-            android:textColor="@color/black"
             android:textSize="@dimen/_10ssp" />
 
         <TextView
             android:id="@+id/search_item_date"
+            style="@style/news_feed_date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/search_item_title"
             android:layout_marginStart="@dimen/_185sdp"
             android:fontFamily="@font/noto_sans_med"
             android:maxLines="1"
             android:text="@string/news_feed_date"
             android:textAlignment="textStart"
-            android:textColor="@color/dark_grey"
-            android:textSize="@dimen/_8ssp"
-            android:layout_below="@id/search_item_title"/>
+            android:textSize="@dimen/_8ssp" />
 
         <TextView
             android:id="@+id/search_item_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/search_item_title"
             android:layout_marginStart="@dimen/_19sdp"
             android:fontFamily="@font/noto_sans_med"
             android:text="@string/news_feed_src"
             android:textAlignment="textStart"
             android:textColor="@color/natural_blue"
-            android:textSize="@dimen/_8ssp"
-            android:layout_below="@id/search_item_title"/>
+            android:textSize="@dimen/_8ssp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_below="@id/search_item_src"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@color/light_grey" />
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

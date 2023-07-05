@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -39,6 +40,7 @@ public class NewsFeed extends Fragment {
     public static RSSItem slectedItem;
 
     String[] topics = {};
+    static String currentTopic;
 
     public NewsFeed(Context context) {
         this.context = context;
@@ -74,8 +76,14 @@ public class NewsFeed extends Fragment {
         topicRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         newsFeedRecyclerView = view.findViewById(R.id.news_feed);
         newsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        currentTopic = "latest";
         setTopic("latest");
         registerForContextMenu(newsFeedRecyclerView);
+        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            setTopic(currentTopic);
+            swipeRefreshLayout.setRefreshing(false);
+        });
         return view;
     }
 
@@ -139,5 +147,6 @@ public class NewsFeed extends Fragment {
             }
         };
         receiveRSS.execute(new RSSAsyncParam(context, topic.toLowerCase()));
+        currentTopic = topic;
     }
 }

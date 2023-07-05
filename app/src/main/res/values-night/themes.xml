@@ -15,6 +15,18 @@
         <item name="android:navigationBarColor">@color/black</item>
     </style>
 
+    <style name="Theme.Switch" parent="Theme.AppCompat.Light">
+        <!-- active track color (30% transparency) -->
+        <item name="colorControlActivated"> @color/white
+        </item>
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal"> @color/dark_grey
+        </item>
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground"> @color/white
+        </item>
+    </style>
+
     <style name="news_feed_des_text">
         <item name="android:textColor">@color/light_grey</item>
     </style>
@@ -48,11 +60,10 @@
     <style name="search_bar_color">
         <item name="android:editTextColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
-        <item name="android:background">@color/light_grey</item>
-        <item name="android:backgroundTint">@color/light_grey</item>
+        <item name="android:background">@drawable/search_view_bg_dark</item>
     </style>
 
-    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:background">@color/light_grey</item>
         <item name="android:textColor">@color/white</item>
     </style>
