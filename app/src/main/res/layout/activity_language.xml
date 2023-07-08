@@ -10,7 +10,7 @@
         android:id="@+id/header_title"
         android:layout_width="@dimen/_130sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:padding="@dimen/_8sdp">
 
         <ImageView

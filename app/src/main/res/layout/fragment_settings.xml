@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,6 +15,7 @@
         android:textStyle="bold"
         style="@style/news_feed_title_text"
         android:textSize="@dimen/_13ssp"/>
+
     <LinearLayout
         android:layout_marginTop="@dimen/_13sdp"
         android:layout_width="match_parent"
@@ -45,13 +47,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:clickable="true"
-            android:drawableStart="@drawable/star_icon"
-            android:drawableEnd="@drawable/right_arrow"
             android:drawablePadding="@dimen/_10sdp"
             android:fontFamily="@font/noto_sans_med"
             android:gravity="center_vertical"
             android:text="@string/sources"
-            android:textSize="@dimen/_10ssp" />
+            android:textSize="@dimen/_10ssp"
+            app:drawableStartCompat="@drawable/star_icon"
+            android:focusable="true"
+            app:drawableEndCompat="@drawable/right_arrow" />
 
         <View
             android:layout_width="match_parent"

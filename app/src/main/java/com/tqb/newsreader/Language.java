@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.tqb.newsreader.backend.adapter.LanguageAdapter;
 
@@ -19,11 +20,15 @@ public class Language extends AppCompatActivity {
     private static LanguageAdapter languageAdapter;
     private static RecyclerView recyclerView;
     private static String[] languages = {"en", "vi"};
+    private static String selectedLanguage;
+    private static String previousLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = getSharedPreferences("language", Context.MODE_PRIVATE);
         String language = sharedPreferences.getString("language", "en");
+        selectedLanguage = language;
+        previousLanguage = language;
         setLanguage(this, language);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
@@ -36,8 +41,15 @@ public class Language extends AppCompatActivity {
     }
 
     private void backToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        SharedPreferences sharedPreferences = getSharedPreferences("language", Context.MODE_PRIVATE);
+        String language = sharedPreferences.getString("language", "en");
+        selectedLanguage = language;
+        if (!selectedLanguage.equals(previousLanguage)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            finish();
+        }
     }
 
     public static void setLanguage(Context context, String language) {

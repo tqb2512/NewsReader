@@ -71,7 +71,6 @@ public class LanguageAdapter extends RecyclerView.Adapter{
                 editor.putString("language", language);
                 editor.apply();
                 notifyDataSetChanged();
-                activity.recreate();
             }
         });
     }
