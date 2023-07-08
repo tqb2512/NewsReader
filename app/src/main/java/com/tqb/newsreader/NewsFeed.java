@@ -3,6 +3,7 @@ package com.tqb.newsreader;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -107,6 +108,11 @@ public class NewsFeed extends Fragment {
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, slectedItem.getLink());
             startActivity(Intent.createChooser(intent, "Share"));
+            return true;
+        } else if (item.getItemId() == R.id.option_open_in_browser) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(slectedItem.getLink()));
+            startActivity(intent);
             return true;
         } else {
             return super.onContextItemSelected(item);

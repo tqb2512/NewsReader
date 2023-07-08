@@ -22,6 +22,7 @@
     <string name="dark_mode">Chế độ nền tối</string>
     <string name="interests">Thể loại yêu thích</string>
     <string name="search">Tìm kiếm</string>
+    <string name="open_in_browser">Mở trong trình duyệt</string>
     <string name="share">Chia sẻ</string>
     <string name="save">Lưu</string>
     <string name="delete">Xóa</string>

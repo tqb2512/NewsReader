@@ -20,6 +20,7 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="interests">Interests</string>
     <string name="search">Search</string>
+    <string name="open_in_browser">Open in browser</string>
     <string name="share">Share</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
