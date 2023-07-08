@@ -39,7 +39,35 @@ public class InterestsAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         String topic = this.topic.keySet().toArray(new String[0])[position];
         int selected = this.topic.get(topic).getAsInt();
-        ((ViewHolder) holder).topic.setText(topic);
+        switch (topic)
+        {
+            case "Latest":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.latest));
+                break;
+            case "World":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.world));
+                break;
+            case "Business":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.business));
+                break;
+            case "Technology":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.technology));
+                break;
+            case "Sports":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.sports));
+                break;
+            case "Science":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.science));
+                break;
+            case "Health":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.health));
+                break;
+            case "Entertainment":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.entertainment));
+                break;
+            default:
+                break;
+        }
         ((ViewHolder) holder).toggle.setChecked(selected == 1);
         ((ViewHolder) holder).toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {

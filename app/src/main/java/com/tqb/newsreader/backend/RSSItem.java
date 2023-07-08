@@ -5,6 +5,7 @@ public class RSSItem {
     private String link;
     private String description;
     private String pubDate;
+    private String pubDateFull;
     private String image;
     private String source;
     private String topic;
@@ -55,5 +56,7 @@ public class RSSItem {
     public void setSource(String source) { this.source = source; }
     public String getCategory() { return topic; }
     public void setCategory(String topic) { this.topic = topic; }
+    public String getPubDateFull() { return pubDateFull; }
+    public void setPubDateFull(String pubDateFull) { this.pubDateFull = pubDateFull; }
 }
 

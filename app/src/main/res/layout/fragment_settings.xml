@@ -19,26 +19,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
-            android:clickable="true"
             android:id="@+id/settings_item_interests"
+            style="@style/news_feed_title_text"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:text="Interests"
-            style="@style/news_feed_title_text"
-            android:fontFamily="@font/noto_sans_med"
+            android:clickable="true"
             android:drawableStart="@drawable/star_icon"
-            android:drawablePadding="@dimen/_10sdp"
             android:drawableEnd="@drawable/right_arrow"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/noto_sans_med"
             android:gravity="center_vertical"
-            android:textSize="@dimen/_10ssp"
-            />
+            android:text="@string/interests"
+            android:textSize="@dimen/_10ssp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_grey"
+            android:layout_marginVertical="@dimen/_10sdp"/>
+
+        <TextView
+            android:id="@+id/settings_item_sources"
+            style="@style/news_feed_title_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:clickable="true"
+            android:drawableStart="@drawable/star_icon"
+            android:drawableEnd="@drawable/right_arrow"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/noto_sans_med"
+            android:gravity="center_vertical"
+            android:text="@string/sources"
+            android:textSize="@dimen/_10ssp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/light_grey"
             android:layout_marginVertical="@dimen/_10sdp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,15 +66,15 @@
 
             <TextView
                 android:id="@+id/search_item_dark"
-                android:layout_weight="2"
+                style="@style/news_feed_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dark Mode"
-                style="@style/news_feed_title_text"
-                android:fontFamily="@font/noto_sans_med"
+                android:layout_weight="2"
                 android:drawableStart="@drawable/darkmode_icon"
                 android:drawablePadding="@dimen/_10sdp"
-                android:textSize="@dimen/_10ssp"/>
+                android:fontFamily="@font/noto_sans_med"
+                android:text="@string/dark_mode"
+                android:textSize="@dimen/_10ssp" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/dark_switch"
@@ -72,17 +92,38 @@
             android:layout_marginVertical="15dp"/>
 
         <TextView
-            android:clickable="true"
+            android:id="@+id/settings_item_language"
+            style="@style/news_feed_title_text"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:text="About"
-            style="@style/news_feed_title_text"
-            android:fontFamily="@font/noto_sans_med"
+            android:clickable="true"
             android:drawableStart="@drawable/question_mark"
-            android:drawablePadding="@dimen/_10sdp"
             android:drawableEnd="@drawable/right_arrow"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/noto_sans_med"
+            android:gravity="center|left"
+            android:text="@string/language"
+            android:textSize="@dimen/_10ssp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_grey"
+            android:layout_marginVertical="@dimen/_10sdp"/>
+
+        <TextView
+            android:id="@+id/settings_item_about"
+            style="@style/news_feed_title_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:clickable="true"
+            android:drawableStart="@drawable/question_mark"
+            android:drawableEnd="@drawable/right_arrow"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/noto_sans_med"
             android:gravity="center_vertical"
-            android:textSize="@dimen/_10ssp"/>
+            android:text="@string/about"
+            android:textSize="@dimen/_10ssp" />
 
         <View
             android:layout_width="match_parent"

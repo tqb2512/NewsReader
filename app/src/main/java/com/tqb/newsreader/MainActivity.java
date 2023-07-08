@@ -13,13 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,41 +48,29 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static WebView webView;
     public static AlertDialog loadingDialog;
     BottomNavigationView bottomNavigationView;
-    public static SharedPreferences sharedPreferences;
+    public static SharedPreferences darkMode;
+    public static SharedPreferences language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sharedPreferences = getSharedPreferences("theme", MODE_PRIVATE);
-        if(sharedPreferences.getBoolean("dark", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        darkMode = getSharedPreferences("theme", MODE_PRIVATE);
+        setDarkMode(darkMode.getBoolean("dark", false));
+        language = getSharedPreferences("language", MODE_PRIVATE);
+        setLanguage(this, language.getString("language", "en"));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        File file = new File(getFilesDir(), "topics.txt");
-        if(!file.exists()) {
-            try {
-                file.createNewFile();
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("Latest", "1");
-                jsonObject.addProperty("World", "1");
-                jsonObject.addProperty("Business", "1");
-                jsonObject.addProperty("Technology", "1");
-                jsonObject.addProperty("Entertainment", "1");
-                jsonObject.addProperty("Sports", "1");
-                jsonObject.addProperty("Science", "1");
-                jsonObject.addProperty("Health", "1");
-                saveTopicsToFile(this, jsonObject);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+
+        initTopics(this);
+        initSources(this);
 
         Fragment fragment = new NewsFeed(this);
         loadFragment(fragment);
@@ -91,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
         webView = new WebView(context);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
         webView.loadUrl(url);
         webView.setWebViewClient(new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -99,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         builder.setView(webView);
-        builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 webView.destroy();
@@ -136,6 +128,70 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+    public static void initTopics(Context context) {
+        File file = new File(context.getFilesDir(), "topics.txt");
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("Latest", "1");
+                jsonObject.addProperty("World", "1");
+                jsonObject.addProperty("Business", "1");
+                jsonObject.addProperty("Technology", "1");
+                jsonObject.addProperty("Entertainment", "1");
+                jsonObject.addProperty("Sports", "1");
+                jsonObject.addProperty("Science", "1");
+                jsonObject.addProperty("Health", "1");
+                saveTopicsToFile(context, jsonObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void initSources(Context context) {
+        File file = new File(context.getFilesDir(), "sources.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("VNExpress", "1");
+                jsonObject.addProperty("ThanhNien", "1");
+                jsonObject.addProperty("TuoiTre", "1");
+                jsonObject.addProperty("VTC", "1");
+                saveSourcesToFile(context, jsonObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void setDarkMode(boolean dark) {
+        if(dark) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    public static void setLanguage(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+    }
+
+    public static void saveSourcesToFile(Context context, JsonObject jsonObject) {
+        File file = new File(context.getFilesDir(), "sources.txt");
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(jsonObject.toString());
+            fileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void saveTopicsToFile(Context context, JsonObject jsonObject) {
         File file = new File(context.getFilesDir(), "topics.txt");
@@ -190,24 +246,6 @@ public class MainActivity extends AppCompatActivity {
             FileWriter fileWriter = new FileWriter(file, true);
             fileWriter.write(jsonString + "\n");
             fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void logNew(Context context)
-    {
-        File file = new File(context.getFilesDir(), "news.txt");
-        try {
-            java.util.Scanner scanner = new java.util.Scanner(file);
-            while (scanner.hasNextLine())
-            {
-                String line = scanner.nextLine();
-                Gson gson = new Gson();
-                RSSItem item = gson.fromJson(line, RSSItem.class);
-                Log.d("News", item.getTitle());
-            }
-            scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

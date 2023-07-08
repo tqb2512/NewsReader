@@ -1,24 +1,25 @@
 package com.tqb.newsreader;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.gson.JsonObject;
 import com.tqb.newsreader.backend.adapter.InterestsAdapter;
+import com.tqb.newsreader.backend.adapter.SourcesAdapter;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Locale;
 
-public class Interests extends AppCompatActivity {
+public class Sources extends AppCompatActivity {
 
-    private static InterestsAdapter interestsAdapter;
+    private static SourcesAdapter sourcesAdapter;
     private static RecyclerView recyclerView;
     private static JsonObject jsonObject;
     @Override
@@ -27,13 +28,13 @@ public class Interests extends AppCompatActivity {
         String language = sharedPreferences.getString("language", "en");
         Language.setLanguage(this, language);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interests);
+        setContentView(R.layout.activity_sources);
         ImageView back = findViewById(R.id.return_button);
         back.setOnClickListener(v -> backToMain());
-        recyclerView = findViewById(R.id.interest_list);
-        jsonObject = readTopicsFromFile(this);
-        interestsAdapter = new InterestsAdapter(this, jsonObject);
-        recyclerView.setAdapter(interestsAdapter);
+        recyclerView = findViewById(R.id.sources_list);
+        jsonObject = readSourcesFromFile(this);
+        sourcesAdapter = new SourcesAdapter(this, jsonObject);
+        recyclerView.setAdapter(sourcesAdapter);
         recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
     }
 
@@ -41,20 +42,9 @@ public class Interests extends AppCompatActivity {
         finish();
     }
 
-    public static void saveTopicsToFile(Context context, JsonObject jsonObject) {
-        File file = new File(context.getFilesDir(), "topics.txt");
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(jsonObject.toString());
-            fileWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static JsonObject readTopicsFromFile(Context context) {
+    public static JsonObject readSourcesFromFile(Context context) {
         JsonObject jsonObject = new JsonObject();
-        File file = new File(context.getFilesDir(), "topics.txt");
+        File file = new File(context.getFilesDir(), "sources.txt");
         try {
             java.util.Scanner scanner = new java.util.Scanner(file);
             String jsonString = scanner.nextLine();
@@ -73,5 +63,4 @@ public class Interests extends AppCompatActivity {
         configuration.locale = locale;
         context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
     }
-
 }

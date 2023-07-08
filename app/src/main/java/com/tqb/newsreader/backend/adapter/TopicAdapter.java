@@ -1,5 +1,6 @@
 package com.tqb.newsreader.backend.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.RadioButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tqb.newsreader.MainActivity;
 import com.tqb.newsreader.NewsFeed;
 import com.tqb.newsreader.R;
 
@@ -33,10 +35,39 @@ public class TopicAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String topic = topics[position];
         RadioButton topicName = ((ViewHolder) holder).topicName;
-        topicName.setText(topic);
+        switch (topic)
+        {
+            case "Latest":
+                topicName.setText(context.getString(R.string.latest));
+                break;
+            case "World":
+                topicName.setText(context.getString(R.string.world));
+                break;
+            case "Business":
+                topicName.setText(context.getString(R.string.business));
+                break;
+            case "Technology":
+                topicName.setText(context.getString(R.string.technology));
+                break;
+            case "Sports":
+                topicName.setText(context.getString(R.string.sports));
+                break;
+            case "Science":
+                topicName.setText(context.getString(R.string.science));
+                break;
+            case "Health":
+                topicName.setText(context.getString(R.string.health));
+                break;
+            case "Entertainment":
+                topicName.setText(context.getString(R.string.entertainment));
+                break;
+            default:
+                topicName.setText(topic);
+                break;
+        }
         topicName.setChecked(selectedPosition == position);
         topicName.setOnClickListener(new View.OnClickListener() {
             @Override

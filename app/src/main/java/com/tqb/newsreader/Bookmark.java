@@ -51,7 +51,7 @@ public class Bookmark extends Fragment {
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.news_feed_cm, menu);
         MenuItem save = menu.findItem(R.id.option_save);
-        save.setTitle("Delete");
+        save.setTitle(R.string.delete);
     }
 
     @Override

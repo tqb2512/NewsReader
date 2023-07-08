@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NewsReader</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news_24_app_title">News 24</string>
+    <string name="img_des_feed">ảnh cho newsfeed</string>
+    <string name="news_feed_title">news_feed_title</string>
+    <string name="news_feed_src">source</string>
+    <string name="news_feed_topic">topic</string>
+    <string name="news_feed_date">ngày đăng</string>
+    <string name="settings">Cài đặt</string>
+
+    <string name="latest">Mới nhất</string>
+    <string name="world">Thế giới</string>
+    <string name="business">Kinh doanh</string>
+    <string name="technology">Công nghệ</string>
+    <string name="entertainment">Giải trí</string>
+    <string name="sports">Thể thao</string>
+    <string name="science">Khoa học</string>
+    <string name="health">Sức khỏe</string>
+    <string name="dark_mode">Chế độ nền tối</string>
+    <string name="interests">Thể loại yêu thích</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="share">Chia sẻ</string>
+    <string name="save">Lưu</string>
+    <string name="delete">Xóa</string>
+    <string name="about">Về chúng tôi</string>
+    <string name="close">Đóng</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="no_internet">Không có kết nối Internet</string>
+    <string name="cant_connect">Không thể kết nối đến máy chủ</string>
+    <string name="error">Lỗi</string>
+    <string name="sources">Nguồn tin</string>
+    <string name="ThanhNien">Thanh Niên</string>
+    <string name="VnExpress">VnExpress</string>
+    <string name="TuoiTre">Tuổi Trẻ</string>
+    <string name="VTC">Báo VTC</string>
+</resources>

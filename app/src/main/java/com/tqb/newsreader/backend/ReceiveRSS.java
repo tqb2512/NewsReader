@@ -28,8 +28,15 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,10 +45,11 @@ import javax.xml.parsers.ParserConfigurationException;
 public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
     private Context context;
     public RSSFeed[] feed;
+
     @Override
     protected String[] doInBackground(RSSAsyncParam... rssAsyncParam) {
         context = rssAsyncParam[0].getContext();
-        RSSSource source = new RSSSource(rssAsyncParam[0].getTopic());
+        RSSSource source = new RSSSource(rssAsyncParam[0].getTopic(), context);
         String[] urls = source.getUrl();
         String[] content = new String[urls.length];
         int index = 0;
@@ -102,8 +110,8 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
             feed = new RSSFeed();
             List<RSSItem> rssItems = new ArrayList<>();
             int size = items.getLength();
-            if (size > 15) {
-                size = 15;
+            if (size > 20) {
+                size = 20;
             }
             for (int i = 0; i < size; i++) {
                 org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
@@ -112,12 +120,28 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                 rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
                 String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
                 rssItem.setPubDate(formatDate(pubDate));
+                rssItem.setPubDateFull(pubDate);
                 Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
-                Element img = doc.select("img").first();
-                if (img != null) {
-                    rssItem.setImage(img.attr("src"));
+
+                if (rssItem.getLink().contains("vtc.vn")) {
+                    Pattern imgPattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
+                    Pattern descPattern = Pattern.compile("</br>(.*?)\\.");
+                    Matcher imgMatcher = imgPattern.matcher(doc.text().toString());
+                    Matcher descMatcher = descPattern.matcher(doc.text().toString());
+                    if (imgMatcher.find()) {
+                        rssItem.setImage(imgMatcher.group(1));
+                    }
+                    if (descMatcher.find()) {
+                        rssItem.setDescription(descMatcher.group(1));
+                    }
+                } else {
+                    Element img = doc.select("img").first();
+                    if (img != null) {
+                        rssItem.setImage(img.attr("src"));
+                    }
+                    rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
                 }
-                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+
                 String sourceAndTopic = rootElement.getElementsByTagName("title").item(0).getTextContent();
                 if (sourceAndTopic.contains(" | ")) {
                     String[] temp = sourceAndTopic.split("\\|");
@@ -133,6 +157,8 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                     rssItem.setCategory(temp[1].trim());
                 } else if (sourceAndTopic.contains(" - Google Tin tức")) {
                     rssItem.setSource(item.getElementsByTagName("source").item(0).getTextContent());
+                } else if (rootElement.getElementsByTagName("generator").item(0).getTextContent().contains("VTC")) {
+                    rssItem.setSource("VTC News");
                 } else {
                     rssItem.setSource(sourceAndTopic);
                 }
@@ -145,7 +171,7 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
         return feed;
     }
 
-    public String formatDate(String date){
+    public String formatDate(String date) {
         /*VNExpress example: Sat, 01 Jul 2023 03:05:51 +0700
         ThanhNien example: Sat, 01 Jul 23 04:22:12 +0700
         TuoiTre example: Sat, 01 Jul 2023 04:22:03 GMT+7
@@ -174,20 +200,17 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
         return feed;
     }
 
-    public RSSFeed sortItemListByPubDate(RSSFeed feed){
+    public RSSFeed sortItemListByPubDate(RSSFeed feed) {
         if (feed == null) {
             return null;
         }
         List<RSSItem> items = feed.getItems();
-        for (int i = 0; i < items.size(); i++) {
-            for (int j = i; j < items.size(); j++) {
-                if (items.get(i).getPubDate().compareTo(items.get(j).getPubDate()) < 0) {
-                    RSSItem temp = items.get(i);
-                    items.set(i, items.get(j));
-                    items.set(j, temp);
-                }
+        Collections.sort(items, new Comparator<RSSItem>() {
+            @Override
+            public int compare(RSSItem o1, RSSItem o2) {
+                return o2.getPubDateFull().compareTo(o1.getPubDateFull());
             }
-        }
+        });
         feed.setItems(items);
         return feed;
     }

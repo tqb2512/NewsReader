@@ -11,9 +11,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+
+import org.w3c.dom.Text;
+
+import java.util.Locale;
 
 public class Settings extends Fragment {
 
@@ -27,6 +32,8 @@ public class Settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+
         TextView interests = view.findViewById(R.id.settings_item_interests);
         interests.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +41,24 @@ public class Settings extends Fragment {
                 onInterestsClick();
             }
         });
+
+        TextView sources = view.findViewById(R.id.settings_item_sources);
+        sources.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSourcesClick();
+            }
+        });
+
+        TextView language = view.findViewById(R.id.settings_item_language);
+        language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLanguageClick();
+            }
+        });
+
+
         SwitchCompat darkMode = view.findViewById(R.id.dark_switch);
         SharedPreferences sharedPreferences = context.getSharedPreferences("theme", Context.MODE_PRIVATE);
         if (sharedPreferences.getBoolean("dark", false)) {
@@ -60,11 +85,30 @@ public class Settings extends Fragment {
                 startActivity(intent);
             }
         });
+
+
+        TextView about = view.findViewById(R.id.settings_item_about);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "About", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 
     public void onInterestsClick () {
         Intent intent = new Intent(context, Interests.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void onSourcesClick () {
+        Intent intent = new Intent(context, Sources.class);
+        startActivityForResult(intent, 0);
+    }
+
+    public void onLanguageClick () {
+        Intent intent = new Intent(context, Language.class);
         startActivityForResult(intent, 0);
     }
 }

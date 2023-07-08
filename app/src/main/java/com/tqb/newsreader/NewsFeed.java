@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -28,6 +29,9 @@ import com.tqb.newsreader.backend.adapter.NewsFeedAdapter;
 import com.tqb.newsreader.backend.adapter.TopicAdapter;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 public class NewsFeed extends Fragment {
 
@@ -38,13 +42,12 @@ public class NewsFeed extends Fragment {
     static TopicAdapter topicAdapter;
     public static List<RSSItem> items;
     public static RSSItem slectedItem;
-
     String[] topics = {};
     static String currentTopic;
 
     public NewsFeed(Context context) {
         this.context = context;
-        //read topic from main activity function
+
         JsonObject jsonObject = MainActivity.readTopicsFromFile(context);
         String[] temps = new String[jsonObject.size()];
         int index = 0;
@@ -147,6 +150,23 @@ public class NewsFeed extends Fragment {
             }
         };
         receiveRSS.execute(new RSSAsyncParam(context, topic.toLowerCase()));
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            if (receiveRSS.getStatus() == ReceiveRSS.Status.RUNNING) {
+                receiveRSS.cancel(true);
+                MainActivity.loadingDialog.dismiss();
+                AlertDialog alertDialog = new AlertDialog.Builder(context, R.style.AlertDialogStyle)
+                        .setTitle(R.string.error)
+                        .setMessage(R.string.cant_connect)
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .create();
+                alertDialog.show();
+            }
+        }, 100000);
+
         currentTopic = topic;
     }
 }
