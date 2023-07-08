@@ -50,7 +50,17 @@ public class LanguageAdapter extends RecyclerView.Adapter{
         String language = languages[position];
         TextView languageName = ((ViewHolder) holder).languageName;
         MaterialRadioButton languageButton = ((ViewHolder) holder).languageButton;
-        languageName.setText(language);
+        switch (language) {
+            case "en":
+                languageName.setText("English");
+                break;
+            case "vi":
+                languageName.setText("Tiếng Việt");
+                break;
+            default:
+                languageName.setText("Unknown");
+                break;
+        }
         languageButton.setChecked(selectedPosition == position);
         languageButton.setOnClickListener(new View.OnClickListener() {
             @Override
