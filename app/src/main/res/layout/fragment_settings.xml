@@ -52,7 +52,7 @@
             android:gravity="center_vertical"
             android:text="@string/sources"
             android:textSize="@dimen/_10ssp"
-            app:drawableStartCompat="@drawable/star_icon"
+            app:drawableStartCompat="@drawable/baseline_source_24"
             android:focusable="true"
             app:drawableEndCompat="@drawable/right_arrow" />
 
