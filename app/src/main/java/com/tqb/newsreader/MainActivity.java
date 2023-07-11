@@ -14,9 +14,11 @@ import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -43,6 +45,7 @@ import com.tqb.newsreader.backend.RSSItem;
 import com.tqb.newsreader.backend.ReceiveRSS;
 import com.tqb.newsreader.backend.adapter.NewsFeedAdapter;
 import com.tqb.newsreader.backend.adapter.TopicAdapter;
+import com.tqb.newsreader.backend.broadcast.ConnectivityReceiver;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     public static SharedPreferences darkMode;
     public static SharedPreferences language;
+    public static AlertDialog noInternetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +80,21 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(fragment);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        BroadcastReceiver broadcastReceiver = new ConnectivityReceiver();
+        IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadcastReceiver, intentFilter);
+        noInternetDialog = new AlertDialog.Builder(this, R.style.AlertDialogStyle)
+                .setMessage(R.string.no_internet_message)
+                .setCancelable(false)
+                .create();
     }
 
-    public static void openUrl(Context context, String url) {
+    public static void openUrl(Context context, RSSItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
         webView = new WebView(context);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
-        webView.loadUrl(url);
+        webView.loadUrl(item.getLink());
         webView.setWebViewClient(new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -91,7 +102,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         builder.setView(webView);
-        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                saveNewToFile(context, item);
+            }
+        });
+
+        builder.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 webView.destroy();

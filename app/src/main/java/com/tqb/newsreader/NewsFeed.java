@@ -38,7 +38,7 @@ public class NewsFeed extends Fragment {
 
     private static Context context;
     static RecyclerView topicRecyclerView;
-    static RecyclerView newsFeedRecyclerView;
+    public static RecyclerView newsFeedRecyclerView;
     static NewsFeedAdapter newsFeedAdapter;
     static TopicAdapter topicAdapter;
     public static List<RSSItem> items;
@@ -132,8 +132,8 @@ public class NewsFeed extends Fragment {
 
     public static void setTopic(String topic) {
         MainActivity.loadingDialog = new AlertDialog.Builder(context)
-                .setView(R.layout.loading_dialog)
                 .setCancelable(false)
+                .setMessage(context.getString(R.string.loading))
                 .create();
         MainActivity.loadingDialog.show();
         ReceiveRSS receiveRSS = new ReceiveRSS() {
@@ -171,7 +171,7 @@ public class NewsFeed extends Fragment {
                         .create();
                 alertDialog.show();
             }
-        }, 100000);
+        }, 10000);
 
         currentTopic = topic;
     }

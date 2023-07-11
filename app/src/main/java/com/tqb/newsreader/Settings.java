@@ -91,7 +91,7 @@ public class Settings extends Fragment {
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "About", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "tqb2512@gmail.com", Toast.LENGTH_SHORT).show();
             }
         });
         return view;

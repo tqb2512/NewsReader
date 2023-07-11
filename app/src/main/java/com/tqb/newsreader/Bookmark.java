@@ -60,7 +60,6 @@ public class Bookmark extends Fragment {
         if (item.getItemId() == R.id.option_save) {
             MainActivity.deleteNewFromFile(context, slectedItem);
             readNewFromFile(context);
-            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.option_share) {
             Intent intent = new Intent(Intent.ACTION_SEND);

@@ -19,11 +19,12 @@
         <item name="colorControlActivated"> @color/dark_grey
         </item>
         <!-- inactive thumb color -->
-        <item name="colorSwitchThumbNormal"> @color/white
+        <item name="colorSwitchThumbNormal"> @color/light_grey
         </item>
         <!-- inactive track color (30% transparency) -->
-        <item name="android:colorForeground">@color/dark_grey
+        <item name="android:colorForeground"> #D9D9D9
         </item>
+
     </style>
     <!-- Ảnh bo góc cho ShapeableImageView -->
     <style name="rounded_corner">

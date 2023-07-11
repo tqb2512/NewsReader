@@ -107,7 +107,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter{
                     RSSItem item = items[getAdapterPosition()];
                     link = item.getLink();
                     MainActivity mainActivity = (MainActivity) context;
-                    MainActivity.openUrl(context, link);
+                    MainActivity.openUrl(context, item);
                 }
             });
         }

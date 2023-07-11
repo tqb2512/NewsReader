@@ -37,4 +37,7 @@
     <string name="VnExpress">VnExpress</string>
     <string name="TuoiTre">Tuổi Trẻ</string>
     <string name="VTC">Báo VTC</string>
+    <string name = "no_internet_message">Vui lòng kiểm tra kết nối Internet và thử lại</string>
+    <string name="connected">Đã kết nối</string>
+    <string name="loading">Đang tải...</string>
 </resources>
