@@ -21,7 +21,7 @@ public class RSSSource {
     public RSSSource(String topic, Context context)
     {
         JsonObject sources = readSourcesFromFile(context);
-        this.urls = new String[5];
+        this.urls = new String[7];
         switch (topic)
         {
             case "latest":
@@ -33,6 +33,10 @@ public class RSSSource {
                     this.urls[2] = "https://vnexpress.net/rss/tin-moi-nhat.rss";
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/feed.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[4] = "https://docbao.vn/rss/trang-chu.rss";
+                if (sources.get("TheThao247").getAsInt() == 1)
+                    this.urls[5] = "https://thethao247.vn/trang-chu.rss";
                 break;
             case "world":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -43,6 +47,8 @@ public class RSSSource {
                     this.urls[2] = "https://vnexpress.net/rss/the-gioi.rss";
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/the-gioi.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[4] = "https://docbao.vn/rss/the-gioi.rss";
                 break;
             case "business":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -53,6 +59,8 @@ public class RSSSource {
                     this.urls[2] = "https://vnexpress.net/rss/kinh-doanh.rss";
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/kinh-te.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[4] = "https://docbao.vn/rss/kinh-te.rss";
                 break;
             case "technology":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -63,6 +71,8 @@ public class RSSSource {
                     this.urls[2] = "https://vnexpress.net/rss/so-hoa.rss";
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/khoa-hoc-cong-nghe.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[4] = "https://docbao.vn/rss/cong-nghe.rss";
                 break;
             case "entertainment":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -73,6 +83,8 @@ public class RSSSource {
                     this.urls[2] = "https://vnexpress.net/rss/giai-tri.rss";
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/van-hoa-giai-tri.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[4] = "https://docbao.vn/rss/giai-tri.rss";
                 break;
             case "sports":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -83,6 +95,10 @@ public class RSSSource {
                     this.urls[2] = "https://vnexpress.net/rss/the-thao.rss";
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/the-thao.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[4] = "https://docbao.vn/rss/the-thao.rss";
+                if (sources.get("TheThao247").getAsInt() == 1)
+                    this.urls[5] = "https://thethao247.vn/the-thao-24h.rss";
                 break;
             case "health":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -93,6 +109,8 @@ public class RSSSource {
                     this.urls[2] = "https://vnexpress.net/rss/suc-khoe.rss";
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/suc-khoe.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[4] = "https://docbao.vn/rss/suc-khoe.rss";
                 break;
             case "science":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -104,10 +122,49 @@ public class RSSSource {
                 if (sources.get("VTC").getAsInt() == 1)
                     this.urls[3] = "https://vtc.vn/rss/khoa-hoc-cong-nghe.rss";
                 break;
+            case "football":
+                if (sources.get("TheThao247").getAsInt() == 1)
+                    this.urls[0] = "https://thethao247.vn/bong-da.rss";
+                break;
+            case "car":
+                if (sources.get("TheThao247").getAsInt() == 1)
+                    this.urls[0] = "https://thethao247.vn/xe-co-c191.rss";
+                if (sources.get("VNExpress").getAsInt() == 1)
+                    this.urls[1] = "https://vnexpress.net/rss/oto-xe-may.rss";
+                if (sources.get("VTC").getAsInt() == 1)
+                    this.urls[2] = "https://vtc.vn/rss/oto-xe-may.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[3] = "https://docbao.vn/rss/o-to-xe-may.rss";
+                if (sources.get("TuoiTre").getAsInt() == 1)
+                    this.urls[4] = "https://tuoitre.vn/rss/xe.rss";
+                if (sources.get("ThanhNien").getAsInt() == 1)
+                    this.urls[5] = "https://thanhnien.vn/rss/xe.rss";
+                break;
+            case "law":
+                if (sources.get("VNExpress").getAsInt() == 1)
+                    this.urls[1] = "https://vnexpress.net/rss/phap-luat.rss";
+                if (sources.get("VTC").getAsInt() == 1)
+                    this.urls[2] = "https://vtc.vn/rss/phap-luat.rss";
+                if (sources.get("DocBao").getAsInt() == 1)
+                    this.urls[3] = "https://docbao.vn/rss/phap-luat.rss";
+                if (sources.get("TuoiTre").getAsInt() == 1)
+                    this.urls[4] = "https://tuoitre.vn/rss/phap-luat.rss";
+                break;
+            case "education":
+                if (sources.get("VNExpress").getAsInt() == 1)
+                    this.urls[1] = "https://vnexpress.net/rss/giao-duc.rss";
+                if (sources.get("VTC").getAsInt() == 1)
+                    this.urls[2] = "https://vtc.vn/rss/giao-duc.rss";
+                if (sources.get("TuoiTre").getAsInt() == 1)
+                    this.urls[4] = "https://tuoitre.vn/rss/giao-duc.rss";
+                if (sources.get("ThanhNien").getAsInt() == 1)
+                    this.urls[5] = "https://thanhnien.vn/rss/giao-duc.rss";
+                break;
             default:
                 this.urls = new String[]{
                         "https://news.google.com/rss/search?q=" + topic + "?hl%3Dvi&gl=VN&ceid=VN:vi&hl=vi"
                 };
+                break;
         }
     }
 

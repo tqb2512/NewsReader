@@ -160,6 +160,10 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.addProperty("Sports", "1");
                 jsonObject.addProperty("Science", "1");
                 jsonObject.addProperty("Health", "1");
+                jsonObject.addProperty("Football", "1");
+                jsonObject.addProperty("Car", "1");
+                jsonObject.addProperty("Law", "1");
+                jsonObject.addProperty("Education", "1");
                 saveTopicsToFile(context, jsonObject);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -177,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.addProperty("ThanhNien", "1");
                 jsonObject.addProperty("TuoiTre", "1");
                 jsonObject.addProperty("VTC", "1");
+                jsonObject.addProperty("DocBao", "1");
+                jsonObject.addProperty("TheThao247", "1");
                 saveSourcesToFile(context, jsonObject);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -65,6 +65,18 @@ public class InterestsAdapter extends RecyclerView.Adapter{
             case "Entertainment":
                 ((ViewHolder) holder).topic.setText(context.getString(R.string.entertainment));
                 break;
+            case "Education":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.education));
+                break;
+            case "Law":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.law));
+                break;
+            case "Football":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.football));
+                break;
+            case "Car":
+                ((ViewHolder) holder).topic.setText(context.getString(R.string.car));
+                break;
             default:
                 break;
         }

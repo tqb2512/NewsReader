@@ -120,7 +120,8 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                 rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
                 String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
                 rssItem.setPubDate(formatDate(pubDate));
-                rssItem.setPubDateFull(pubDate);
+                rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
+                Log.d ("pubDate", rssItem.getPubDateFull());
                 Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
 
                 if (rssItem.getLink().contains("vtc.vn")) {
@@ -134,6 +135,10 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                     if (descMatcher.find()) {
                         rssItem.setDescription(descMatcher.group(1));
                     }
+                } else if (rssItem.getLink().contains("docbao.vn")) {
+                    String image = "https:" + item.getElementsByTagName("image").item(0).getTextContent();
+                    rssItem.setImage(image);
+                    rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
                 } else {
                     Element img = doc.select("img").first();
                     if (img != null) {
@@ -157,10 +162,17 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                     rssItem.setCategory(temp[1].trim());
                 } else if (sourceAndTopic.contains(" - Google Tin tức")) {
                     rssItem.setSource(item.getElementsByTagName("source").item(0).getTextContent());
-                } else if (rootElement.getElementsByTagName("generator").item(0).getTextContent().contains("VTC")) {
-                    rssItem.setSource("VTC News");
+                } else if (rssItem.getLink().contains("docbao.vn")) {
+                    rssItem.setSource("docbao.vn");
+                } else if (rssItem.getLink().contains("thethao247.vn")) {
+                    rssItem.setSource("Thể Thao 247");
                 } else {
-                    rssItem.setSource(sourceAndTopic);
+                    if (rootElement.getElementsByTagName("generator").item(0).getTextContent().contains("VTC")) {
+                        rssItem.setSource("VTC News");
+                    }
+                    else {
+                        rssItem.setSource(sourceAndTopic);
+                    }
                 }
                 rssItems.add(rssItem);
             }
@@ -171,15 +183,28 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
         return feed;
     }
 
+    public String getTimeFromPubDate(String pubDate) {
+        String[] temp = pubDate.split(" ");
+        String result = "";
+        result = temp[temp.length-2];
+        return result;
+    }
+
     public String formatDate(String date) {
-        /*VNExpress example: Sat, 01 Jul 2023 03:05:51 +0700
-        ThanhNien example: Sat, 01 Jul 23 04:22:12 +0700
-        TuoiTre example: Sat, 01 Jul 2023 04:22:03 GMT+7
-        format to: Sat, 01 Jul 23*/
         String[] temp = date.split(" ");
         String result = "";
         if (temp[3].length() == 2) {
             temp[3] = "20" + temp[3];
+        }
+        // shorten date
+        if (temp[0].length() > 4)
+        {
+            temp[0] = temp[0].substring(0, 3);
+            temp[0] = temp[0] + ",";
+        }
+        if (temp[2].length() > 3)
+        {
+            temp[2] = temp[2].substring(0, 3);
         }
         result = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[3];
         return result;

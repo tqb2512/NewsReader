@@ -64,6 +64,18 @@ public class TopicAdapter extends RecyclerView.Adapter{
             case "Entertainment":
                 topicName.setText(context.getString(R.string.entertainment));
                 break;
+            case "Football":
+                topicName.setText(context.getString(R.string.football));
+                break;
+            case "Law":
+                topicName.setText(context.getString(R.string.law));
+                break;
+            case "Education":
+                topicName.setText(context.getString(R.string.education));
+                break;
+            case "Car":
+                topicName.setText(context.getString(R.string.car));
+                break;
             default:
                 topicName.setText(topic);
                 break;

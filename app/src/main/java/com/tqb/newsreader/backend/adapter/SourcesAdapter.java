@@ -51,6 +51,13 @@ public class SourcesAdapter extends RecyclerView.Adapter {
                 break;
             case "VTC":
                 ((ViewHolder) holder).source.setText(context.getString(R.string.VTC));
+                break;
+            case "DocBao":
+                ((ViewHolder) holder).source.setText(context.getString(R.string.DocBao));
+                break;
+            case "TheThao247":
+                ((ViewHolder) holder).source.setText(context.getString(R.string.TheThao247));
+                break;
             default:
                 break;
         }

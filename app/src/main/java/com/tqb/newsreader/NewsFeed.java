@@ -171,7 +171,7 @@ public class NewsFeed extends Fragment {
                         .create();
                 alertDialog.show();
             }
-        }, 10000);
+        }, 150000);
 
         currentTopic = topic;
     }

@@ -37,7 +37,13 @@
     <string name="VnExpress">VnExpress</string>
     <string name="TuoiTre">Tuổi Trẻ</string>
     <string name="VTC">Báo VTC</string>
+    <string name="DocBao">DocBao.vn</string>
     <string name = "no_internet_message">Vui lòng kiểm tra kết nối Internet và thử lại</string>
     <string name="connected">Đã kết nối</string>
     <string name="loading">Đang tải...</string>
+    <string name="football">Bóng đá</string>
+    <string name="law">Pháp luật</string>
+    <string name="education">Giáo dục</string>
+    <string name="car">Xe</string>
+    <string name="TheThao247">Thể Thao 247</string>
 </resources>
