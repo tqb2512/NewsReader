@@ -31,6 +31,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -45,6 +46,8 @@ import javax.xml.parsers.ParserConfigurationException;
 public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]> {
     private Context context;
     public RSSFeed[] feed;
+
+    final int maxItem = 10;
 
     @Override
     protected String[] doInBackground(RSSAsyncParam... rssAsyncParam) {
@@ -106,13 +109,48 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
             org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
-            NodeList items = rootElement.getElementsByTagName("item");
             feed = new RSSFeed();
+            String rootLink = rootElement.getElementsByTagName("link").item(0).getTextContent();
+            if (rootLink.contains("vnexpress")) {
+                feed = fromVnExpress(content);
+            } else if (rootLink.contains("thanhnien")) {
+                feed = fromThanhNien(content);
+            } else if (rootLink.contains("tuoitre")) {
+                feed = fromTuoiTre(content);
+            } else if (rootLink.contains("vtc.vn")) {
+                feed = fromBaoVTC(content);
+            } else if (rootLink.contains("docbao.vn")) {
+                feed = fromDocBao(content);
+            } else if (rootLink.contains("thethao247")) {
+                feed = fromTheThao247(content);
+            } else if (rootLink.contains("news.google")) {
+                feed = fromGoogle(content);
+            } else if (rootLink.contains("tienphong")) {
+                feed = fromTienPhong(content);
+            } else if (rootLink.contains("nld.com")) {
+                feed = fromNguoiLaoDong(content);
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return feed;
+    }
+
+    public RSSFeed fromVnExpress(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
             List<RSSItem> rssItems = new ArrayList<>();
             int size = items.getLength();
-            if (size > 20) {
-                size = 20;
+            if (size > maxItem) {
+                size = maxItem;
             }
+
             for (int i = 0; i < size; i++) {
                 org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
                 RSSItem rssItem = new RSSItem();
@@ -121,66 +159,344 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                 String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
                 rssItem.setPubDate(formatDate(pubDate));
                 rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
-                Log.d ("pubDate", rssItem.getPubDateFull());
                 Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
-
-                if (rssItem.getLink().contains("vtc.vn")) {
-                    Pattern imgPattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
-                    Pattern descPattern = Pattern.compile("</br>(.*?)\\.");
-                    Matcher imgMatcher = imgPattern.matcher(doc.text().toString());
-                    Matcher descMatcher = descPattern.matcher(doc.text().toString());
-                    if (imgMatcher.find()) {
-                        rssItem.setImage(imgMatcher.group(1));
-                    }
-                    if (descMatcher.find()) {
-                        rssItem.setDescription(descMatcher.group(1));
-                    }
-                } else if (rssItem.getLink().contains("docbao.vn")) {
-                    String image = "https:" + item.getElementsByTagName("image").item(0).getTextContent();
-                    rssItem.setImage(image);
-                    rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
-                } else {
-                    Element img = doc.select("img").first();
-                    if (img != null) {
-                        rssItem.setImage(img.attr("src"));
-                    }
-                    rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                Element img = doc.select("img").first();
+                if (img != null) {
+                    rssItem.setImage(img.attr("src"));
                 }
-
-                String sourceAndTopic = rootElement.getElementsByTagName("title").item(0).getTextContent();
-                if (sourceAndTopic.contains(" | ")) {
-                    String[] temp = sourceAndTopic.split("\\|");
-                    rssItem.setSource(temp[1].trim());
-                    rssItem.setCategory(temp[0].trim());
-                } else if (sourceAndTopic.contains(" - VnExpress RSS")) {
-                    String[] temp = sourceAndTopic.split("-");
-                    rssItem.setSource(temp[1].trim());
-                    rssItem.setCategory(temp[0].trim());
-                } else if (sourceAndTopic.contains("Tuổi Trẻ Online -")) {
-                    String[] temp = sourceAndTopic.split("-");
-                    rssItem.setSource(temp[0].trim());
-                    rssItem.setCategory(temp[1].trim());
-                } else if (sourceAndTopic.contains(" - Google Tin tức")) {
-                    rssItem.setSource(item.getElementsByTagName("source").item(0).getTextContent());
-                } else if (rssItem.getLink().contains("docbao.vn")) {
-                    rssItem.setSource("docbao.vn");
-                } else if (rssItem.getLink().contains("thethao247.vn")) {
-                    rssItem.setSource("Thể Thao 247");
-                } else {
-                    if (rootElement.getElementsByTagName("generator").item(0).getTextContent().contains("VTC")) {
-                        rssItem.setSource("VTC News");
-                    }
-                    else {
-                        rssItem.setSource(sourceAndTopic);
-                    }
-                }
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("VnExpress");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
                 rssItems.add(rssItem);
             }
-            feed.setItems(rssItems);
+            result.setItems(rssItems);
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
-        return feed;
+        return result;
+    }
+
+    public RSSFeed fromThanhNien(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDate(formatDate(pubDate));
+                rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                Element img = doc.select("img").first();
+                if (img != null) {
+                    rssItem.setImage(img.attr("src"));
+                }
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("Thanh Niên");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public RSSFeed fromTuoiTre(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDate(formatDate(pubDate));
+                rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                Element img = doc.select("img").first();
+                if (img != null) {
+                    rssItem.setImage(img.attr("src"));
+                }
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("Tuổi Trẻ");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public RSSFeed fromBaoVTC(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDate(formatDate(pubDate));
+                rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                Pattern imgPattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
+                Pattern descPattern = Pattern.compile("</br>(.*?)\\.");
+                Matcher imgMatcher = imgPattern.matcher(doc.text().toString());
+                Matcher descMatcher = descPattern.matcher(doc.text().toString());
+                if (imgMatcher.find()) {
+                    rssItem.setImage(imgMatcher.group(1));
+                }
+                if (descMatcher.find()) {
+                    rssItem.setDescription(descMatcher.group(1));
+                }
+                rssItem.setSource("Báo VTC");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public RSSFeed fromDocBao(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDate(formatDate(pubDate));
+                rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                String image = "https:" + item.getElementsByTagName("image").item(0).getTextContent();
+                rssItem.setImage(image);
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("DocBao.vn");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public RSSFeed fromTheThao247(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDate(formatDate(pubDate));
+                rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                Element img = doc.select("img").first();
+                if (img != null) {
+                    rssItem.setImage(img.attr("src"));
+                }
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("Thể Thao 247");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public RSSFeed fromGoogle(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDate(formatDate(pubDate));
+                rssItem.setPubDateFull(rssItem.getPubDate() + " " + getTimeFromPubDate(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                Element img = doc.select("img").first();
+                if (img != null) {
+                    rssItem.setImage(img.attr("src"));
+                }
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("Google");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public RSSFeed fromTienPhong(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDateFull(formatDate2WithTime(pubDate));
+                rssItem.setPubDate(formatDate2(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                Element img = doc.select("img").first();
+                if (img != null) {
+                    rssItem.setImage(img.attr("src"));
+                }
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("Tiền Phong");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public RSSFeed fromNguoiLaoDong(String content) {
+        RSSFeed result = new RSSFeed();
+        try {
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            org.w3c.dom.Document xmlDocument = builder.parse(new InputSource(new StringReader(content)));
+            org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
+            NodeList items = rootElement.getElementsByTagName("item");
+
+            List<RSSItem> rssItems = new ArrayList<>();
+            int size = items.getLength();
+            if (size > maxItem) {
+                size = maxItem;
+            }
+
+            for (int i = 0; i < size; i++) {
+                org.w3c.dom.Element item = (org.w3c.dom.Element) items.item(i);
+                RSSItem rssItem = new RSSItem();
+                rssItem.setTitle(Html.fromHtml(item.getElementsByTagName("title").item(0).getTextContent()).toString());
+                rssItem.setLink(item.getElementsByTagName("link").item(0).getTextContent());
+                String pubDate = item.getElementsByTagName("pubDate").item(0).getTextContent();
+                rssItem.setPubDateFull(formatDate3WithTime(pubDate));
+                rssItem.setPubDate(formatDate3(pubDate));
+                Document doc = Jsoup.parse(item.getElementsByTagName("description").item(0).getTextContent());
+                Element img = doc.select("img").first();
+                if (img != null) {
+                    rssItem.setImage(img.attr("src"));
+                }
+                rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
+                rssItem.setSource("NLD");
+                rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
+                rssItems.add(rssItem);
+            }
+            result.setItems(rssItems);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public String getTimeFromPubDate(String pubDate) {
@@ -207,6 +523,112 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
             temp[2] = temp[2].substring(0, 3);
         }
         result = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[3];
+        return result;
+    }
+
+    public String formatDate2(String date) {
+        //From 2023-07-12 11:15:21
+        //To Wed, 12 Jul 2023 11:15:21
+        String[] temp = date.split(" ");
+        String result = "";
+        String[] dateTemp = temp[0].split("-");
+        String[] timeTemp = temp[1].split(":");
+        String[] dateOfWeekString = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(dateTemp[0]), Integer.parseInt(dateTemp[1]) + 1, Integer.parseInt(dateTemp[2]));
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        result = dateOfWeekString[dayOfWeek] + ", " + dateTemp[2] + " " + getMonth(dateTemp[1]) + " " + dateTemp[0];
+        return result;
+    }
+
+    public String formatDate2WithTime(String date) {
+        //From 2023-07-12 11:15:21
+        //To Wed, 12 Jul 2023 11:15:21
+        String[] temp = date.split(" ");
+        String result = "";
+        String[] dateTemp = temp[0].split("-");
+        String[] timeTemp = temp[1].split(":");
+        String[] dateOfWeekString = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(dateTemp[0]), Integer.parseInt(dateTemp[1]) + 1, Integer.parseInt(dateTemp[2]));
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        result = dateOfWeekString[dayOfWeek] + ", " + dateTemp[2] + " " + getMonth(dateTemp[1]) + " " + dateTemp[0] + " " + temp[1];
+        return result;
+    }
+
+    public String formatDate3(String date) {
+        //From 7/12/2023 12:50:39 PM
+        //To Wed, 12 Jul 2023 12:50:39
+        String[] temp = date.split(" ");
+        String result = "";
+        String[] dateTemp = temp[0].split("/");
+        String[] timeTemp = temp[1].split(":");
+        String[] dateOfWeekString = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(dateTemp[2]), Integer.parseInt(dateTemp[0]) + 1, Integer.parseInt(dateTemp[1]));
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        result = dateOfWeekString[dayOfWeek] + ", " + dateTemp[1] + " " + getMonth(dateTemp[0]) + " " + dateTemp[2];
+        return result;
+    }
+
+    public String formatDate3WithTime(String date) {
+        //From 7/12/2023 12:50:39 PM
+        //To Wed, 12 Jul 2023 12:50:39
+        String[] temp = date.split(" ");
+        String result = "";
+        String[] dateTemp = temp[0].split("/");
+        String[] timeTemp = temp[1].split(":");
+        String[] dateOfWeekString = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(dateTemp[2]), Integer.parseInt(dateTemp[0]) + 1, Integer.parseInt(dateTemp[1]));
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        result = dateOfWeekString[dayOfWeek] + ", " + dateTemp[1] + " " + getMonth(dateTemp[0]) + " " + dateTemp[2] + " " + temp[1] + " " + temp[2];
+        return result;
+    }
+
+    public String getMonth(String month) {
+        String result = "";
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+        switch (month) {
+            case "01":
+                result = "Jan";
+                break;
+            case "02":
+                result = "Feb";
+                break;
+            case "03":
+                result = "Mar";
+                break;
+            case "04":
+                result = "Apr";
+                break;
+            case "05":
+                result = "May";
+                break;
+            case "06":
+                result = "Jun";
+                break;
+            case "07":
+                result = "Jul";
+                break;
+            case "08":
+                result = "Aug";
+                break;
+            case "09":
+                result = "Sep";
+                break;
+            case "10":
+                result = "Oct";
+                break;
+            case "11":
+                result = "Nov";
+                break;
+            case "12":
+                result = "Dec";
+                break;
+        }
         return result;
     }
 
