@@ -26,7 +26,7 @@
 2. Truy cập đến internet.
 
 ### Hướng dẫn cài đặt
-Tải về và cài đặt [file apk](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) này.
+Tải về và cài đặt [file apk](https://github.com/tqb2512/NewsReader/releases/download/official/NewsReader_Official.apk) này.
 
 
 * [Trịnh Quốc Bảo](https://github.com/tqb2512)
