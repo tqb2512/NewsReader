@@ -178,13 +178,13 @@ public class MainActivity extends AppCompatActivity {
             try {
                 file.createNewFile();
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("VNExpress", "0");
-                jsonObject.addProperty("ThanhNien", "0");
-                jsonObject.addProperty("TuoiTre", "0");
-                jsonObject.addProperty("VTC", "0");
-                jsonObject.addProperty("DocBao", "0");
-                jsonObject.addProperty("TheThao247", "0");
-                jsonObject.addProperty("TienPhong", "0");
+                jsonObject.addProperty("VNExpress", "1");
+                jsonObject.addProperty("ThanhNien", "1");
+                jsonObject.addProperty("TuoiTre", "1");
+                jsonObject.addProperty("VTC", "1");
+                jsonObject.addProperty("DocBao", "1");
+                jsonObject.addProperty("TheThao247", "1");
+                jsonObject.addProperty("TienPhong", "1");
                 jsonObject.addProperty("NguoiLaoDong", "1");
                 saveSourcesToFile(context, jsonObject);
             } catch (Exception e) {
