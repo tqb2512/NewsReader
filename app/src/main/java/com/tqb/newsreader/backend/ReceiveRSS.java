@@ -408,7 +408,12 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
                     rssItem.setImage(img.attr("src"));
                 }
                 rssItem.setDescription(Html.fromHtml(doc.body().text()).toString());
-                rssItem.setSource("Google");
+
+                String source = item.getElementsByTagName("title").item(0).getTextContent();
+                if (source.contains(" - ")) {
+                    source = source.split(" - ")[1];
+                }
+                rssItem.setSource(source);
                 rssItem.setCategory(rootElement.getElementsByTagName("title").item(0).getTextContent());
                 rssItems.add(rssItem);
             }
@@ -582,7 +587,7 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
         Calendar calendar = Calendar.getInstance();
         calendar.set(Integer.parseInt(dateTemp[2]), Integer.parseInt(dateTemp[0]) + 1, Integer.parseInt(dateTemp[1]));
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        result = dateOfWeekString[dayOfWeek] + ", " + dateTemp[1] + " " + getMonth(dateTemp[0]) + " " + dateTemp[2] + " " + temp[1] + " " + temp[2];
+        result = dateOfWeekString[dayOfWeek] + ", " + dateTemp[1] + " " + getMonth(dateTemp[0]) + " " + dateTemp[2] + " " + temp[1];
         return result;
     }
 

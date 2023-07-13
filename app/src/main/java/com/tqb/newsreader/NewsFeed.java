@@ -101,7 +101,6 @@ public class NewsFeed extends Fragment {
     public boolean onContextItemSelected(android.view.MenuItem item) {
         if (item.getItemId() == R.id.option_save) {
             MainActivity.saveNewToFile(context, slectedItem);
-            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.option_share) {
             Intent intent = new Intent(Intent.ACTION_SEND);
@@ -171,7 +170,7 @@ public class NewsFeed extends Fragment {
                         .create();
                 alertDialog.show();
             }
-        }, 150000);
+        }, 15000);
 
         currentTopic = topic;
     }

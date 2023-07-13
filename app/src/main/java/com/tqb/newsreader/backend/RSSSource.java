@@ -21,7 +21,7 @@ public class RSSSource {
     public RSSSource(String topic, Context context)
     {
         JsonObject sources = readSourcesFromFile(context);
-        this.urls = new String[8];
+        this.urls = new String[10];
         switch (topic)
         {
             case "latest":
@@ -101,8 +101,6 @@ public class RSSSource {
                     this.urls[3] = "https://vtc.vn/rss/van-hoa-giai-tri.rss";
                 if (sources.get("DocBao").getAsInt() == 1)
                     this.urls[4] = "https://docbao.vn/rss/giai-tri.rss";
-                if (sources.get("TienPhong").getAsInt() == 1)
-                    this.urls[6] = "https://tienphong.vn/rss/giai-tri-36.rss";
                 if (sources.get("NguoiLaoDong").getAsInt() == 1)
                     this.urls[7] = "https://nld.com.vn/giai-tri.rss";
                 break;
