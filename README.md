@@ -26,7 +26,7 @@
 2. Truy cập đến internet.
 
 ### Hướng dẫn cài đặt
-Tải về và cài đặt [file apk](https://github.com/tqb2512/NewsReader/releases/download/official/NewsReader_Official.apk) này.
+Tải về và cài đặt [file apk](https://github.com/tqb2512/NewsReader/releases/tag/official) này.
 
 
 * [Trịnh Quốc Bảo](https://github.com/tqb2512)
