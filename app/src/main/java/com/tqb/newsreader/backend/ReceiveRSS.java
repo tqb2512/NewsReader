@@ -111,21 +111,21 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
             org.w3c.dom.Element rootElement = xmlDocument.getDocumentElement();
             feed = new RSSFeed();
             String rootLink = rootElement.getElementsByTagName("link").item(0).getTextContent();
-            if (rootLink.contains("vnexpress")) {
+            if (rootLink.contains("vnexpress.net")) {
                 feed = fromVnExpress(content);
-            } else if (rootLink.contains("thanhnien")) {
+            } else if (rootLink.contains("thanhnien.vn")) {
                 feed = fromThanhNien(content);
-            } else if (rootLink.contains("tuoitre")) {
+            } else if (rootLink.contains("tuoitre.vn")) {
                 feed = fromTuoiTre(content);
             } else if (rootLink.contains("vtc.vn")) {
                 feed = fromBaoVTC(content);
             } else if (rootLink.contains("docbao.vn")) {
                 feed = fromDocBao(content);
-            } else if (rootLink.contains("thethao247")) {
+            } else if (rootLink.contains("thethao247.vn")) {
                 feed = fromTheThao247(content);
             } else if (rootLink.contains("news.google")) {
                 feed = fromGoogle(content);
-            } else if (rootLink.contains("tienphong")) {
+            } else if (rootLink.contains("tienphong.vn")) {
                 feed = fromTienPhong(content);
             } else if (rootLink.contains("nld.com")) {
                 feed = fromNguoiLaoDong(content);
@@ -573,6 +573,7 @@ public abstract class ReceiveRSS extends AsyncTask<RSSAsyncParam, Void, String[]
         calendar.set(Integer.parseInt(dateTemp[2]), Integer.parseInt(dateTemp[0]) + 1, Integer.parseInt(dateTemp[1]));
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         result = dateOfWeekString[dayOfWeek] + ", " + dateTemp[1] + " " + getMonth(dateTemp[0]) + " " + dateTemp[2];
+        Log.d("Date", result);
         return result;
     }
 

@@ -85,10 +85,6 @@ public class RSSSource {
                     this.urls[3] = "https://vtc.vn/rss/khoa-hoc-cong-nghe.rss";
                 if (sources.get("DocBao").getAsInt() == 1)
                     this.urls[4] = "https://docbao.vn/rss/cong-nghe.rss";
-                if (sources.get("TienPhong").getAsInt() == 1)
-                    this.urls[6] = "https://tienphong.vn/rss/cong-nghe-khoa-hoc-46.rss";
-                if (sources.get("NguoiLaoDong").getAsInt() == 1)
-                    this.urls[7] = "https://nld.com.vn/cong-nghe.rss";
                 break;
             case "entertainment":
                 if (sources.get("ThanhNien").getAsInt() == 1)
@@ -101,6 +97,8 @@ public class RSSSource {
                     this.urls[3] = "https://vtc.vn/rss/van-hoa-giai-tri.rss";
                 if (sources.get("DocBao").getAsInt() == 1)
                     this.urls[4] = "https://docbao.vn/rss/giai-tri.rss";
+                if (sources.get("TienPhong").getAsInt() == 1)
+                    this.urls[6] = "https://tienphong.vn/rss/giai-tri-36.rss";
                 if (sources.get("NguoiLaoDong").getAsInt() == 1)
                     this.urls[7] = "https://nld.com.vn/giai-tri.rss";
                 break;
